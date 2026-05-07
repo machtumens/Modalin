@@ -1,0 +1,12 @@
+node_modules
+.claude/
+.next
+.env
+.env.local
+*.log
+.DS_Store
+.vercel
+.turbo
+prisma/migrations/dev.db*
+*.tsbuildinfo
+next-env.d.ts

@@ -1,0 +1,38 @@
+{
+  "Common": {
+    "appName": "Modalin",
+    "tagline": "Capital Grows, Access Opens",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "signUp": "Sign up",
+    "dashboard": "Dashboard",
+    "loading": "Loading..."
+  },
+  "Nav": {
+    "home": "Home",
+    "marketplace": "Marketplace",
+    "forUMKM": "For SMEs",
+    "forInvestor": "For Investors",
+    "about": "About"
+  },
+  "Hero": {
+    "headline": "Capital for SMEs to grow. Access for the next-generation investor.",
+    "sub": "Indonesia's first equity-crowdfunding platform integrated with SME bank accounts. Invest from Rp100,000, real-time transparency, 100% equity-share.",
+    "ctaInvest": "Start investing from Rp100k",
+    "ctaUmkm": "Register your SME"
+  },
+  "Footer": {
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "contact": "Contact",
+    "disclaimer": "Modalin is currently applying for an LUDBTI provider license under POJK 16/2021 and POJK 22/2024."
+  },
+  "Auth": {
+    "signInTitle": "Sign in to Modalin",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "demo": "Demo accounts: andi@inv.id, admin@modalin.id, or any SME owner. Password: Demo123!"
+  }
+}

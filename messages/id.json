@@ -1,0 +1,38 @@
+{
+  "Common": {
+    "appName": "Modalin",
+    "tagline": "Modal Tumbuh, Akses Terbuka",
+    "signIn": "Masuk",
+    "signOut": "Keluar",
+    "signUp": "Daftar",
+    "dashboard": "Dasbor",
+    "loading": "Memuat..."
+  },
+  "Nav": {
+    "home": "Beranda",
+    "marketplace": "Marketplace",
+    "forUMKM": "Untuk UMKM",
+    "forInvestor": "Untuk Investor",
+    "about": "Tentang"
+  },
+  "Hero": {
+    "headline": "Modal untuk UMKM Bertumbuh, Akses untuk Investor Generasi Baru.",
+    "sub": "Platform equity crowdfunding pertama Indonesia yang terintegrasi dengan rekening bank UMKM. Investasi mulai Rp100.000, transparansi real-time, 100% bagi hasil ekuitas.",
+    "ctaInvest": "Mulai Investasi Rp100rb",
+    "ctaUmkm": "Daftarkan UMKM Anda"
+  },
+  "Footer": {
+    "product": "Produk",
+    "company": "Perusahaan",
+    "legal": "Legal",
+    "contact": "Kontak",
+    "disclaimer": "Modalin sedang dalam proses pengajuan izin penyelenggara Layanan Urun Dana Berbasis Teknologi Informasi (LUDBTI) sesuai POJK 16/2021 dan POJK 22/2024."
+  },
+  "Auth": {
+    "signInTitle": "Masuk ke Modalin",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "submit": "Masuk",
+    "demo": "Akun demo: gunakan andi@inv.id, admin@modalin.id, atau salah satu UMKM. Sandi: Demo123!"
+  }
+}
