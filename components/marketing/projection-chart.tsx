@@ -377,7 +377,7 @@ function ScenarioMetric({
   return (
     <div className={`rounded-lg border border-zinc-800 ${primary ? "bg-zinc-950" : "bg-zinc-900/40"} p-3`}>
       <div className="text-[10px] font-medium uppercase tracking-widest text-zinc-500">{label}</div>
-      <div className={`mt-1 font-display font-bold ${primary ? `bg-gradient-to-br ${tone} bg-clip-text text-transparent text-xl` : "text-white text-base"}`}>
+      <div className={`mt-1 font-display font-bold ${primary ? `bg-linear-to-br ${tone} bg-clip-text text-transparent text-xl` : "text-white text-base"}`}>
         {value}
       </div>
       {unit && <div className="text-[10px] text-zinc-500">{unit}</div>}
@@ -407,13 +407,13 @@ function UnitCard({
       whileHover={{ y: -4 }}
       className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur transition-colors hover:border-zinc-700"
     >
-      <div className={`pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br ${accent} opacity-15 blur-3xl transition-opacity group-hover:opacity-30`} />
+      <div className={`pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-linear-to-br ${accent} opacity-15 blur-3xl transition-opacity group-hover:opacity-30`} />
       <div className="relative">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-950 text-brand-300">
           <Icon className="h-4 w-4" />
         </div>
         <div className="mt-4 text-[10px] font-semibold uppercase tracking-[0.25em] text-brand-400">{eyebrow}</div>
-        <div className={`mt-1 font-display text-xl font-bold bg-gradient-to-br ${accent} bg-clip-text text-transparent`}>{title}</div>
+        <div className={`mt-1 font-display text-xl font-bold bg-linear-to-br ${accent} bg-clip-text text-transparent`}>{title}</div>
         <ul className="mt-4 space-y-2">
           {rows.map((r) => (
             <li key={r.k} className="flex items-center justify-between border-b border-zinc-800/60 pb-1.5 text-xs last:border-0">
@@ -441,7 +441,7 @@ function UseOfFunds({ label, pct, value }: { label: string; pct: number; value: 
           whileInView={{ width: `${pct * 2.5}%` }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="h-full bg-gradient-to-r from-brand-400 to-gold-400"
+          className="h-full bg-linear-to-r from-brand-400 to-gold-400"
         />
       </div>
     </div>

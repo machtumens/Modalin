@@ -76,8 +76,8 @@ function StatCard({
       whileHover={{ y: -4 }}
       className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/40 p-7 backdrop-blur transition-colors hover:border-zinc-700"
     >
-      <div className={`pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br ${color} opacity-20 blur-3xl transition-opacity group-hover:opacity-40`} />
-      <div className={`font-display text-5xl font-bold tracking-tight bg-gradient-to-br ${color} bg-clip-text text-transparent`}>
+      <div className={`pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-linear-to-br ${color} opacity-20 blur-3xl transition-opacity group-hover:opacity-40`} />
+      <div className={`font-display text-5xl font-bold tracking-tight bg-linear-to-br ${color} bg-clip-text text-transparent`}>
         {prefix}
         {n.toLocaleString("id-ID", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
         {suffix}

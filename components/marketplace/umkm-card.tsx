@@ -23,7 +23,7 @@ export function UMKMCard({ d }: { d: UMKMCardData }) {
   return (
     <Link href={`/marketplace/${d.id}`} className="group">
       <Card className="overflow-hidden transition-shadow group-hover:shadow-md">
-        <div className="relative h-32 overflow-hidden bg-gradient-to-br from-brand-500/20 via-zinc-900 to-gold-500/10">
+        <div className="relative h-32 overflow-hidden bg-linear-to-br from-brand-500/20 via-zinc-900 to-gold-500/10">
           <div className="absolute inset-0 grid-floor opacity-30" />
           <div className="absolute right-3 top-3 z-10 flex items-center gap-1">
             <Badge variant={aiBadgeVariant(d.aiScore)}>AI {d.aiScore}</Badge>

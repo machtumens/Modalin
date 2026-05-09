@@ -31,7 +31,7 @@ export function TransactionPreview({
           />
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 rounded-b-xl bg-gradient-to-t from-zinc-950 via-zinc-950/85 to-transparent flex items-end justify-center pb-4">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 rounded-b-xl bg-linear-to-t from-zinc-950 via-zinc-950/85 to-transparent flex items-end justify-center pb-4">
         <span className="rounded-full bg-brand-500/20 px-4 py-1.5 text-xs text-brand-200 ring-1 ring-inset ring-brand-400/30">
           Investasikan Rp100rb untuk akses real-time penuh
         </span>

@@ -4,7 +4,7 @@ import { Logo } from "./logo";
 export function Footer() {
   return (
     <footer className="relative mt-24 border-t border-zinc-800/80 bg-zinc-950">
-      <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-brand-400/60 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-linear-to-r from-transparent via-brand-400/60 to-transparent" />
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
           <div className="col-span-2 md:col-span-2">

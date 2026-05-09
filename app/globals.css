@@ -32,11 +32,6 @@
   body {
     @apply bg-zinc-950 text-zinc-100 antialiased;
     font-family: var(--font-sans);
-    background-image:
-      radial-gradient(1200px 800px at 10% -10%, rgba(20, 184, 166, 0.12), transparent 60%),
-      radial-gradient(900px 700px at 110% 10%, rgba(245, 158, 11, 0.10), transparent 60%),
-      radial-gradient(800px 600px at 50% 120%, rgba(15, 118, 110, 0.10), transparent 60%);
-    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -94,9 +89,8 @@
 .aurora-blob {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(70px);
-  mix-blend-mode: screen;
-  opacity: 0.55;
+  filter: blur(80px);
+  opacity: 0.35;
   pointer-events: none;
   will-change: transform;
 }

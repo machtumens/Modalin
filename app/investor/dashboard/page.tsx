@@ -87,7 +87,7 @@ export default async function InvestorDashboard() {
             ))}
           </div>
           <div className="mt-6">
-            <Link href="/investor/index-fund" className="block rounded-xl border border-brand-400/30 bg-gradient-to-br from-brand-600/40 to-brand-900/40 p-5 text-white backdrop-blur transition-colors hover:border-brand-400/60">
+            <Link href="/investor/index-fund" className="block rounded-xl border border-brand-400/30 bg-linear-to-br from-brand-600/40 to-brand-900/40 p-5 text-white backdrop-blur transition-colors hover:border-brand-400/60">
               <div className="text-xs uppercase tracking-wide text-brand-300">Modalin Index Fund</div>
               <div className="mt-1 font-semibold">Diversifikasi otomatis ke 15 UMKM</div>
               <div className="mt-2 text-xs text-zinc-300">Konservatif · Balanced · Growth →</div>

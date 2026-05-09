@@ -99,7 +99,7 @@ export function Hero() {
         />
         <div className="absolute inset-0 grid-floor" />
         <div className="absolute inset-0 noise-layer" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-zinc-950 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-zinc-950 to-transparent" />
       </div>
 
       <motion.div
@@ -145,7 +145,7 @@ export function Hero() {
                     Mulai Investasi Rp100rb
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
-                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                  <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-zinc-700 bg-zinc-900/40 text-white backdrop-blur hover:border-brand-400 hover:bg-zinc-900/60 hover:text-brand-300">
@@ -202,7 +202,7 @@ export function Hero() {
           className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-zinc-500 md:flex"
         >
           Scroll untuk jelajah
-          <span className="h-10 w-px animate-[float-slow_2s_ease-in-out_infinite] bg-gradient-to-b from-brand-400 to-transparent" />
+          <span className="h-10 w-px animate-[float-slow_2s_ease-in-out_infinite] bg-linear-to-b from-brand-400 to-transparent" />
         </motion.div>
       </motion.div>
     </section>

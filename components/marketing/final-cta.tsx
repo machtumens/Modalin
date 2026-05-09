@@ -13,7 +13,7 @@ export function FinalCTA() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden rounded-3xl border border-brand-400/20 bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900 p-10 sm:p-16"
+        className="relative overflow-hidden rounded-3xl border border-brand-400/20 bg-linear-to-br from-zinc-900 via-zinc-950 to-zinc-900 p-10 sm:p-16"
       >
         {/* aurora */}
         <div className="aurora-blob b1" style={{ top: "-30%", left: "-10%", width: 500, height: 500, background: "radial-gradient(circle, #14b8a6 0%, transparent 60%)" }} />

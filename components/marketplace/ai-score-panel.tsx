@@ -81,7 +81,7 @@ export function AIScorePanel({
               </div>
               <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-800">
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-brand-500 to-gold-400"
+                  className="h-full rounded-full bg-linear-to-r from-brand-500 to-gold-400"
                   initial={{ width: 0 }}
                   animate={{ width: `${val}%` }}
                   transition={{ duration: 0.9, ease: "easeOut" }}

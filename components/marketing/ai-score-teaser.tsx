@@ -121,7 +121,7 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-800">
         <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-brand-400 to-gold-400 shadow-[0_0_12px_rgba(45,212,191,0.6)]"
+          className="h-full rounded-full bg-linear-to-r from-brand-400 to-gold-400 shadow-[0_0_12px_rgba(45,212,191,0.6)]"
           initial={{ width: 0 }}
           whileInView={{ width: `${value}%` }}
           viewport={{ once: true }}

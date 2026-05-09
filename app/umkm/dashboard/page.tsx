@@ -59,7 +59,7 @@ export default async function UMKMDashboard() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 space-y-8">
-      <header className="relative flex flex-wrap items-start justify-between gap-4 overflow-hidden rounded-2xl border border-brand-400/30 bg-gradient-to-br from-brand-700/60 to-brand-900/60 p-6 text-white backdrop-blur">
+      <header className="relative flex flex-wrap items-start justify-between gap-4 overflow-hidden rounded-2xl border border-brand-400/30 bg-linear-to-br from-brand-700/60 to-brand-900/60 p-6 text-white backdrop-blur">
         <div className="absolute inset-0 grid-floor opacity-30" />
         <div className="relative">
           <div className="text-xs uppercase tracking-wide text-brand-200">{ba?.providerBPR}</div>

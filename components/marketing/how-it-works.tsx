@@ -35,7 +35,7 @@ export function HowItWorks() {
           <div className="absolute left-6 top-0 hidden h-full w-px bg-zinc-800 md:block" />
           <motion.div
             style={{ height: lineH }}
-            className="absolute left-6 top-0 hidden w-px bg-gradient-to-b from-brand-400 via-gold-400 to-brand-400 shadow-[0_0_20px_rgba(45,212,191,0.6)] md:block"
+            className="absolute left-6 top-0 hidden w-px bg-linear-to-b from-brand-400 via-gold-400 to-brand-400 shadow-[0_0_20px_rgba(45,212,191,0.6)] md:block"
           />
 
           <ol className="space-y-6 md:space-y-10">

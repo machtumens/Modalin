@@ -42,7 +42,7 @@ export function ComparisonTable() {
             <tr className="border-b border-zinc-800 text-left">
               <th className="p-4 font-medium text-zinc-500"></th>
               <th className="relative p-4 font-semibold text-brand-300">
-                <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-400 to-transparent" />
+                <span className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-brand-400 to-transparent" />
                 Modalin
               </th>
               <th className="p-4 font-medium text-zinc-400">Bank Konvensional</th>

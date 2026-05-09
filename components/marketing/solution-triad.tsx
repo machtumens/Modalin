@@ -55,7 +55,7 @@ export function SolutionTriad() {
               boxShadow: `0 0 0 0 ${it.ring}`,
             }}
           >
-            <div className={`pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br ${it.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
+            <div className={`pointer-events-none absolute -inset-px rounded-2xl bg-linear-to-br ${it.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
             <div className="relative">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-950 text-brand-400 transition-all duration-300 group-hover:border-brand-400/60 group-hover:text-brand-300 group-hover:shadow-[0_0_30px_-5px_rgba(45,212,191,0.6)]">
                 <it.icon className="h-5 w-5" />
