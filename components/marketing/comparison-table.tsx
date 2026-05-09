@@ -1,5 +1,6 @@
 "use client";
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Check, X, Minus } from "lucide-react";
 import { Section } from "./section";
 
@@ -21,6 +22,16 @@ function CellRender({ value }: { value: Cell }) {
 }
 
 export function ComparisonTable() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: -1000, y: -1000 });
+  const [hover, setHover] = useState<number | null>(null);
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
+  };
+
   return (
     <Section>
       <div className="mb-10 max-w-2xl">
@@ -31,13 +42,22 @@ export function ComparisonTable() {
         </h2>
       </div>
       <motion.div
+        ref={ref}
+        onMouseMove={onMove}
+        onMouseLeave={() => setPos({ x: -1000, y: -1000 })}
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.5 }}
-        className="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-900/40 backdrop-blur"
+        className="relative overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-900/40 backdrop-blur"
       >
-        <table className="w-full text-sm">
+        <div
+          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(280px circle at ${pos.x}px ${pos.y}px, rgba(45,212,191,0.10), transparent 50%)`,
+          }}
+        />
+        <table className="relative w-full text-sm">
           <thead>
             <tr className="border-b border-zinc-800 text-left">
               <th className="p-4 font-medium text-zinc-500"></th>
@@ -58,9 +78,24 @@ export function ComparisonTable() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="border-b border-zinc-800/60 transition-colors last:border-0 hover:bg-zinc-900/60"
+                onMouseEnter={() => setHover(i)}
+                onMouseLeave={() => setHover(null)}
+                className="relative border-b border-zinc-800/60 transition-colors last:border-0"
               >
-                <td className="p-4 text-zinc-300">{r.label}</td>
+                <td className="relative p-4 text-zinc-300">
+                  <AnimatePresence>
+                    {hover === i && (
+                      <motion.span
+                        layoutId="row-hover"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute inset-0 -z-10 bg-linear-to-r from-brand-500/10 via-transparent to-transparent"
+                      />
+                    )}
+                  </AnimatePresence>
+                  {r.label}
+                </td>
                 <td className="bg-brand-500/5 p-4 ring-1 ring-inset ring-brand-400/10">
                   <CellRender value={r.modalin} />
                 </td>

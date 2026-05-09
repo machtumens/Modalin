@@ -5,6 +5,14 @@ import { Section } from "./section";
 
 type ScoreData = { score: number; components: Record<string, number> };
 
+const orbitChips = [
+  { label: "SLIK 82", angle: 0, r: 110 },
+  { label: "GMV 71", angle: 72, r: 130 },
+  { label: "DIGITAL 80", angle: 144, r: 120 },
+  { label: "SECTOR +", angle: 216, r: 130 },
+  { label: "SHARIA ✓", angle: 288, r: 110 },
+];
+
 export function AIScoreTeaser() {
   const [data, setData] = useState<ScoreData | null>(null);
   const reduce = useReducedMotion();
@@ -49,58 +57,106 @@ export function AIScoreTeaser() {
               { k: "E-commerce", v: "Velocity GMV 90 hari" },
               { k: "Digital behavior", v: "Pola transaksi & log-in" },
               { k: "Sektor", v: "Outlook industri makro" },
-            ].map((x) => (
-              <div key={x.k} className="rounded-lg border border-zinc-800 bg-zinc-900/40 px-3 py-2.5">
+            ].map((x, i) => (
+              <motion.div
+                key={x.k}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                whileHover={{ x: 4, borderColor: "rgba(45,212,191,0.5)" }}
+                className="rounded-lg border border-zinc-800 bg-zinc-900/40 px-3 py-2.5"
+              >
                 <div className="text-xs font-medium text-brand-400">{x.k}</div>
                 <div className="text-xs text-zinc-500">{x.v}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         <motion.div
-          initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
           className="card-dark glow-ring relative rounded-2xl p-8"
         >
-          <div className="flex items-center gap-7">
-            <div className="relative h-36 w-36">
-              <div className="absolute inset-0 rounded-full bg-brand-500/20 blur-2xl" />
-              <svg viewBox="0 0 128 128" className="relative h-full w-full -rotate-90">
-                <circle cx="64" cy="64" r="56" stroke="rgb(39 39 42)" strokeWidth="10" fill="none" />
-                <motion.circle
-                  cx="64"
-                  cy="64"
-                  r="56"
-                  stroke="url(#scoreGrad)"
-                  strokeWidth="10"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={dashOffset}
-                  initial={{ strokeDashoffset: circumference }}
-                  whileInView={{ strokeDashoffset: dashOffset }}
-                  viewport={{ once: true }}
-                  transition={{ duration: reduce ? 0 : 1.6, ease: "easeOut" }}
-                />
-                <defs>
-                  <linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#2dd4bf" />
-                    <stop offset="100%" stopColor="#fbbf24" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-display text-4xl font-bold text-white tabular-nums">{display}</span>
-                <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500">AI Score</span>
+          <div className="flex flex-col items-center gap-7 sm:flex-row sm:items-start">
+            <div className="relative h-56 w-56 shrink-0">
+              {/* orbital ring */}
+              <motion.div
+                animate={reduce ? {} : { rotate: 360 }}
+                transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+                className="absolute inset-0 rounded-full border border-dashed border-brand-400/20"
+              />
+              <motion.div
+                animate={reduce ? {} : { rotate: -360 }}
+                transition={{ duration: 28, ease: "linear", repeat: Infinity }}
+                className="absolute inset-6 rounded-full border border-zinc-800"
+              />
+              {/* orbital chips */}
+              {!reduce &&
+                orbitChips.map((c, i) => (
+                  <motion.div
+                    key={c.label}
+                    className="absolute left-1/2 top-1/2"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 22 + i * 3, ease: "linear", repeat: Infinity }}
+                  >
+                    <div
+                      style={{ transform: `rotate(${c.angle}deg) translateX(${c.r}px) rotate(-${c.angle}deg)` }}
+                      className="absolute -translate-x-1/2 -translate-y-1/2"
+                    >
+                      <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{ duration: 22 + i * 3, ease: "linear", repeat: Infinity }}
+                        className="rounded-full border border-zinc-800 bg-zinc-950/90 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-brand-300 shadow-[0_0_12px_rgba(45,212,191,0.25)]"
+                      >
+                        {c.label}
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                ))}
+              {/* center score */}
+              <div className="absolute inset-12 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full bg-brand-500/20 blur-2xl" />
+                <svg viewBox="0 0 128 128" className="relative h-full w-full -rotate-90">
+                  <circle cx="64" cy="64" r="56" stroke="rgb(39 39 42)" strokeWidth="10" fill="none" />
+                  <motion.circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="url(#scoreGrad)"
+                    strokeWidth="10"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={dashOffset}
+                    initial={{ strokeDashoffset: circumference }}
+                    whileInView={{ strokeDashoffset: dashOffset }}
+                    viewport={{ once: true }}
+                    transition={{ duration: reduce ? 0 : 1.6, ease: "easeOut" }}
+                  />
+                  <defs>
+                    <linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#2dd4bf" />
+                      <stop offset="100%" stopColor="#fbbf24" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="font-display text-4xl font-bold text-white tabular-nums">{display}</span>
+                  <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500">AI Score</span>
+                </div>
               </div>
             </div>
             <div className="flex-1 space-y-3">
               <ScoreBar label="SLIK OJK" value={data?.components.slik ?? 0} />
               <ScoreBar label="E-commerce velocity" value={data?.components.ecommerce ?? 0} />
               <ScoreBar label="Digital behavior" value={data?.components.behavior ?? 0} />
+              <div className="mt-4 rounded-lg border border-zinc-800 bg-zinc-950/60 p-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+                model = w·{`{slik, gmv, behavior, sector}`}
+              </div>
             </div>
           </div>
           <p className="mt-6 text-xs text-zinc-500">
