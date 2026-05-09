@@ -28,7 +28,7 @@ export function ScrambleText({ text, className, trigger = true }: { text: string
         setOut(text);
         clearInterval(interval);
       }
-    }, 30);
+    }, 18);
     return () => clearInterval(interval);
   }, [text, trigger]);
 

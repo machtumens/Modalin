@@ -440,7 +440,7 @@ function UseOfFunds({ label, pct, value }: { label: string; pct: number; value: 
           initial={{ width: 0 }}
           whileInView={{ width: `${pct * 2.5}%` }}
           viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="h-full bg-linear-to-r from-brand-400 to-gold-400"
         />
       </div>

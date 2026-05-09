@@ -26,7 +26,7 @@ export function AIScoreTeaser() {
 
   useEffect(() => {
     if (!data) return;
-    const controls = animate(score, data.score, { duration: reduce ? 0 : 1.6, ease: "easeOut" });
+    const controls = animate(score, data.score, { duration: reduce ? 0 : 0.8, ease: "easeOut" });
     const unsub = rounded.on("change", (v) => setDisplay(v));
     return () => {
       controls.stop();
@@ -135,7 +135,7 @@ export function AIScoreTeaser() {
                     initial={{ strokeDashoffset: circumference }}
                     whileInView={{ strokeDashoffset: dashOffset }}
                     viewport={{ once: true }}
-                    transition={{ duration: reduce ? 0 : 1.6, ease: "easeOut" }}
+                    transition={{ duration: reduce ? 0 : 0.8, ease: "easeOut" }}
                   />
                   <defs>
                     <linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="1">
@@ -181,7 +181,7 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
           initial={{ width: 0 }}
           whileInView={{ width: `${value}%` }}
           viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         />
       </div>
     </div>

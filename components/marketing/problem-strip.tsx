@@ -31,7 +31,7 @@ const stats = [
 
 export function ProblemStrip() {
   return (
-    <Section className="py-20 lg:py-28">
+    <Section>
       <div className="mb-12 max-w-2xl">
         <div className="text-[10px] font-semibold uppercase tracking-[0.5em] text-gold-300">
           Pasar yang menunggu
@@ -81,7 +81,7 @@ function StatCard({
       return;
     }
     const controls = animate(0, value, {
-      duration: 1.8,
+      duration: 0.9,
       ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => setN(v),
     });

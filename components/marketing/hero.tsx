@@ -31,8 +31,8 @@ export function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
-  const sceneRotX = useTransform(scrollYProgress, [0, 1], [0, 25]);
-  const sceneZ = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const sceneRotX = useTransform(scrollYProgress, [0, 1], [0, 8]);
+  const sceneZ = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -62,12 +62,12 @@ export function Hero() {
   }, [mx, my, reduce]);
 
   const stagger = {
-    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 },
-    show: { opacity: 1, y: 0, transition: { staggerChildren: reduce ? 0 : 0.09 } },
+    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 12 },
+    show: { opacity: 1, y: 0, transition: { staggerChildren: reduce ? 0 : 0.04, duration: 0.25 } },
   };
   const child = {
-    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 16 },
-    show: { opacity: 1, y: 0 },
+    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 8 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
   };
 
   return (
@@ -147,7 +147,7 @@ export function Hero() {
                 <motion.span
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.6, duration: 0.8, ease: "circOut" }}
+                  transition={{ delay: 0.25, duration: 0.4, ease: "circOut" }}
                   style={{ transformOrigin: "left" }}
                   className="absolute -bottom-1 left-0 h-[2px] w-full bg-linear-to-r from-gold-400 via-gold-200 to-transparent"
                 />

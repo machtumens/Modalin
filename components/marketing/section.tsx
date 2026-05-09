@@ -15,11 +15,11 @@ export function Section({
   return (
     <motion.section
       id={id}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      viewport={{ once: true, margin: "-80px" }}
-      className={cn("mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24", className)}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      viewport={{ once: true, margin: "-40px" }}
+      className={cn("mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16", className)}
     >
       {children}
     </motion.section>
