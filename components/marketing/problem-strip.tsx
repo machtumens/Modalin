@@ -127,7 +127,7 @@ function FlipStat({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       style={{ perspective: 1400 }}
-      className="relative h-[260px] cursor-pointer"
+      className="relative h-[340px] cursor-pointer sm:h-[360px]"
       onClick={() => setFlipped((v) => !v)}
     >
       <motion.div
@@ -139,7 +139,7 @@ function FlipStat({
         {/* Front */}
         <div
           style={{ backfaceVisibility: "hidden" }}
-          className={`absolute inset-0 overflow-hidden rounded-2xl p-7 backdrop-blur transition-all duration-300 ${cardCls}`}
+          className={`absolute inset-0 overflow-hidden rounded-2xl p-8 backdrop-blur transition-all duration-300 sm:p-9 ${cardCls}`}
         >
           {isHero && (
             <div className="pointer-events-none absolute inset-0">
@@ -155,7 +155,7 @@ function FlipStat({
               <span className="hairline w-12 opacity-60" />
             </div>
             <div
-              className={`font-display text-6xl font-bold tracking-tight sm:text-7xl ${
+              className={`whitespace-nowrap font-display text-5xl font-bold tracking-tight sm:text-6xl ${
                 tone === "gold" ? "gold-foil" : tone === "champagne" ? "platinum-foil" : "text-white"
               }`}
             >
@@ -174,7 +174,7 @@ function FlipStat({
         {/* Back */}
         <div
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-          className={`absolute inset-0 overflow-hidden rounded-2xl p-7 ${cardCls}`}
+          className={`absolute inset-0 overflow-hidden rounded-2xl p-8 sm:p-9 ${cardCls}`}
         >
           <div className="flex items-center justify-between">
             <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-gold-300">
