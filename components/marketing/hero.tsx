@@ -17,12 +17,12 @@ import { Magnetic } from "./magnetic";
 import { ScrambleText } from "./scramble-text";
 
 const orbitItems = [
-  { icon: Wallet, label: "BPR Account", angle: 0, radius: 200, z: 60 },
-  { icon: Banknote, label: "Bagi Hasil", angle: 60, radius: 240, z: -40 },
-  { icon: TrendingUp, label: "Live Tx", angle: 120, radius: 220, z: 80 },
-  { icon: Sparkles, label: "AI Score", angle: 180, radius: 250, z: -60 },
-  { icon: Zap, label: "Reimburse", angle: 240, radius: 210, z: 40 },
-  { icon: Activity, label: "Open Banking", angle: 300, radius: 230, z: 20 },
+  { icon: Wallet, label: "BPR Account", angle: 0, radius: 320, z: 60 },
+  { icon: Banknote, label: "Bagi Hasil", angle: 60, radius: 340, z: -40 },
+  { icon: TrendingUp, label: "Live Tx", angle: 120, radius: 320, z: 80 },
+  { icon: Sparkles, label: "AI Score", angle: 180, radius: 340, z: -60 },
+  { icon: Zap, label: "Reimburse", angle: 240, radius: 320, z: 40 },
+  { icon: Activity, label: "Open Banking", angle: 300, radius: 340, z: 20 },
 ];
 
 export function Hero() {
@@ -206,7 +206,7 @@ export function Hero() {
           </motion.div>
 
           {/* Right — 3D layered panel stack */}
-          <motion.div style={{ rotateX: orbitRotX, rotateY: orbitRotY, transformStyle: "preserve-3d", perspective: 1600 }} className="relative h-[560px]">
+          <motion.div style={{ rotateX: orbitRotX, rotateY: orbitRotY, transformStyle: "preserve-3d", perspective: 1600 }} className="relative h-[640px]">
             <Orbits3D items={orbitItems} reduce={reduce} />
             <PanelStack rotX={stackRotX} rotY={stackRotY} />
             <div className="pointer-events-none absolute -inset-x-10 -bottom-10 h-40 rounded-full bg-brand-500/40 blur-3xl" />
@@ -264,8 +264,8 @@ function PanelStack({
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
-        style={{ transform: "translateZ(-80px) translateX(-50px) translateY(-40px) rotate(-6deg)" }}
-        className="absolute h-44 w-72 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 backdrop-blur"
+        style={{ transform: "translate(-50%, -50%) translate3d(-110px, -120px, -80px) rotate(-6deg)" }}
+        className="absolute left-1/2 top-1/2 h-44 w-72 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 backdrop-blur"
       >
         <div className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">layer.back</div>
         <div className="mt-3 space-y-2">
@@ -279,8 +279,8 @@ function PanelStack({
       <motion.div
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 6, ease: "easeInOut", repeat: Infinity, delay: 0.3 }}
-        style={{ transform: "translateZ(0px) translateX(40px) translateY(20px) rotate(4deg)" }}
-        className="absolute h-52 w-80 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 backdrop-blur shadow-[0_30px_80px_-30px_rgba(45,212,191,0.4)]"
+        style={{ transform: "translate(-50%, -50%) translate3d(110px, 80px, 0px) rotate(4deg)" }}
+        className="absolute left-1/2 top-1/2 h-52 w-80 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 backdrop-blur shadow-[0_30px_80px_-30px_rgba(45,212,191,0.4)]"
       >
         <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-zinc-500">
           <span>layer.mid</span>
@@ -299,8 +299,8 @@ function PanelStack({
       <motion.div
         animate={{ y: [0, -4, 0] }}
         transition={{ duration: 4.5, ease: "easeInOut", repeat: Infinity, delay: 0.6 }}
-        style={{ transform: "translateZ(80px)" }}
-        className="card-dark glow-ring relative h-72 w-80 rounded-2xl p-6"
+        style={{ transform: "translate(-50%, -50%) translate3d(0px, 0px, 80px)" }}
+        className="card-dark glow-ring absolute left-1/2 top-1/2 h-72 w-80 rounded-2xl p-6"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500">
