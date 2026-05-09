@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair", style: ["normal", "italic"] });
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`dark ${inter.variable} ${jakarta.variable}`}>
+    <html lang="id" className={`dark ${inter.variable} ${jakarta.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>

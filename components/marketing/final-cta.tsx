@@ -14,7 +14,7 @@ export function FinalCTA() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden rounded-[2rem] border border-brand-400/30 bg-linear-to-br from-zinc-900 via-zinc-950 to-zinc-900 p-10 sm:p-16"
+        className="bevel-card gold-ring relative overflow-hidden rounded-[2rem] p-10 sm:p-16"
       >
         <div className="aurora-blob" style={{ top: "-30%", left: "-10%", width: 500, height: 500, background: "radial-gradient(circle, #14b8a6 0%, transparent 60%)" }} />
         <div className="aurora-blob" style={{ bottom: "-30%", right: "-10%", width: 500, height: 500, background: "radial-gradient(circle, #f59e0b 0%, transparent 60%)" }} />
@@ -32,7 +32,7 @@ export function FinalCTA() {
 
           <h2 className="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
             Modal tumbuh, akses terbuka.{" "}
-            <span className="shimmer-text">Bergabunglah hari ini.</span>
+            <span className="serif-italic gold-foil">Bergabunglah hari ini.</span>
           </h2>
 
           <p className="mt-5 max-w-xl text-base text-zinc-400">

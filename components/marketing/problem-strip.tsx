@@ -4,20 +4,41 @@ import { animate, motion, useInView, useReducedMotion } from "framer-motion";
 import { Section } from "./section";
 
 const stats = [
-  { value: 65, suffix: " jt", label: "UMKM di Indonesia", note: "61% PDB · 97% tenaga kerja", color: "from-brand-400 to-brand-600" },
-  { value: 1605, prefix: "Rp", suffix: " T", label: "Funding gap per tahun", note: "Bank menuntut agunan, P2P 18–30% bunga", color: "from-gold-400 to-gold-600" },
-  { value: 14.8, suffix: " jt", label: "Investor ritel aktif", note: "Gen Z & milenial cari instrumen alternatif", color: "from-brand-300 to-gold-400", decimals: 1 },
-];
+  {
+    value: 65,
+    suffix: " jt",
+    label: "UMKM di Indonesia",
+    note: "61% PDB · 97% tenaga kerja",
+    tone: "platinum",
+  },
+  {
+    value: 1605,
+    prefix: "Rp ",
+    suffix: " T",
+    label: "Funding gap per tahun",
+    note: "Bank menuntut agunan, P2P 18–30% bunga",
+    tone: "gold",
+  },
+  {
+    value: 14.8,
+    suffix: " jt",
+    label: "Investor ritel aktif",
+    note: "Gen Z & milenial cari instrumen alternatif",
+    tone: "champagne",
+    decimals: 1,
+  },
+] as const;
 
 export function ProblemStrip() {
   return (
-    <Section className="py-16 lg:py-20">
-      <div className="mb-10 max-w-2xl">
-        <div className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-400">
+    <Section className="py-20 lg:py-28">
+      <div className="mb-12 max-w-2xl">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.5em] text-gold-300">
           Pasar yang menunggu
         </div>
-        <h2 className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl">
-          Tiga angka yang menjelaskan kenapa Modalin ada.
+        <h2 className="mt-4 font-display text-3xl font-bold text-white sm:text-5xl">
+          Tiga angka yang menjelaskan{" "}
+          <span className="serif-italic gold-foil">kenapa Modalin ada</span>.
         </h2>
       </div>
       <div className="grid gap-6 sm:grid-cols-3">
@@ -35,7 +56,7 @@ function StatCard({
   suffix,
   label,
   note,
-  color,
+  tone,
   decimals = 0,
   index,
 }: {
@@ -44,7 +65,7 @@ function StatCard({
   suffix?: string;
   label: string;
   note: string;
-  color: string;
+  tone: "platinum" | "gold" | "champagne";
   decimals?: number;
   index: number;
 }) {
@@ -60,30 +81,53 @@ function StatCard({
       return;
     }
     const controls = animate(0, value, {
-      duration: 1.6,
-      ease: "easeOut",
+      duration: 1.8,
+      ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => setN(v),
     });
     return () => controls.stop();
   }, [inView, value, reduce]);
+
+  const isHero = tone === "gold";
 
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.12 }}
-      whileHover={{ y: -4 }}
-      className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/40 p-7 backdrop-blur transition-colors hover:border-zinc-700"
+      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -6 }}
+      className={`group relative overflow-hidden rounded-2xl p-8 backdrop-blur transition-all duration-500 ${
+        isHero
+          ? "bevel-card gold-ring"
+          : "border border-zinc-800 bg-zinc-900/50 hover:border-zinc-700"
+      }`}
     >
-      <div className={`pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-linear-to-br ${color} opacity-20 blur-3xl transition-opacity group-hover:opacity-40`} />
-      <div className={`font-display text-5xl font-bold tracking-tight bg-linear-to-br ${color} bg-clip-text text-transparent`}>
-        {prefix}
-        {n.toLocaleString("id-ID", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
-        {suffix}
+      {isHero && (
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-gold-400/30 blur-3xl" />
+          <div className="absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-gold-500/20 blur-3xl" />
+        </div>
+      )}
+      <div className="relative">
+        <div className="mb-6 flex items-center justify-between">
+          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-gold-300">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span className="hairline w-12 opacity-60" />
+        </div>
+        <div
+          className={`font-display text-6xl font-bold tracking-tight sm:text-7xl ${
+            tone === "gold" ? "gold-foil" : tone === "champagne" ? "platinum-foil" : "text-white"
+          }`}
+        >
+          {prefix}
+          {n.toLocaleString("id-ID", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
+          {suffix}
+        </div>
+        <div className="mt-6 font-display text-base font-semibold text-white">{label}</div>
+        <div className="mt-1.5 text-xs leading-relaxed text-zinc-400">{note}</div>
       </div>
-      <div className="mt-3 text-sm font-medium text-white">{label}</div>
-      <div className="mt-1 text-xs text-zinc-500">{note}</div>
     </motion.div>
   );
 }

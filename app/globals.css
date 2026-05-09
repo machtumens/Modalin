@@ -5,6 +5,7 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
 
   --color-brand-50: #f0fdfa;
   --color-brand-100: #ccfbf1;
@@ -17,10 +18,18 @@
   --color-brand-800: #115e59;
   --color-brand-900: #134e4a;
 
+  --color-gold-200: #fde68a;
   --color-gold-300: #fcd34d;
   --color-gold-400: #fbbf24;
   --color-gold-500: #f59e0b;
   --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+
+  --color-ink-900: #050507;
+  --color-ink-950: #020203;
+  --color-champagne-100: #fff7e6;
+  --color-champagne-200: #f5e6c4;
+  --color-champagne-300: #e6cf94;
 }
 
 @layer base {
@@ -162,6 +171,88 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 6s linear infinite;
+}
+
+.gold-foil {
+  background: linear-gradient(
+    100deg,
+    #f5e6c4 0%,
+    #fbbf24 22%,
+    #fff7e6 38%,
+    #d97706 52%,
+    #fcd34d 68%,
+    #f5e6c4 84%,
+    #fff7e6 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 8s ease-in-out infinite;
+  filter: drop-shadow(0 1px 12px rgba(251, 191, 36, 0.35));
+}
+
+.platinum-foil {
+  background: linear-gradient(
+    100deg,
+    #ffffff 0%,
+    #d4d4d8 25%,
+    #ffffff 50%,
+    #a1a1aa 75%,
+    #ffffff 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 7s ease-in-out infinite;
+}
+
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.section-ink {
+  background:
+    radial-gradient(ellipse at top, #0a0a0c 0%, #020203 70%);
+}
+
+.section-obsidian {
+  background:
+    linear-gradient(180deg, #050507 0%, #0a0a0c 50%, #050507 100%);
+}
+
+.section-champagne {
+  background:
+    radial-gradient(ellipse at center, rgba(251, 191, 36, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0a0c 0%, #050507 100%);
+}
+
+.hairline {
+  background: linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.5) 20%, rgba(251, 191, 36, 0.9) 50%, rgba(251, 191, 36, 0.5) 80%, transparent 100%);
+  height: 1px;
+}
+
+.bevel-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(180deg, rgba(24, 24, 27, 0.85) 0%, rgba(9, 9, 11, 0.85) 100%);
+  border: 1px solid;
+  border-image: linear-gradient(180deg, rgba(251, 191, 36, 0.35), rgba(63, 63, 70, 0.4) 50%, rgba(251, 191, 36, 0.15)) 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 30px 80px -30px rgba(251, 191, 36, 0.15),
+    0 0 0 1px rgba(251, 191, 36, 0.08);
+}
+
+.gold-ring {
+  box-shadow:
+    inset 0 0 0 1px rgba(251, 191, 36, 0.45),
+    0 0 0 1px rgba(251, 191, 36, 0.15),
+    0 30px 60px -25px rgba(251, 191, 36, 0.45);
 }
 
 .glow-ring {

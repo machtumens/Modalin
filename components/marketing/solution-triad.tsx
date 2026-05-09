@@ -12,14 +12,16 @@ const items = [
     accent: "from-brand-400/30 via-brand-500/10 to-transparent",
     glow: "rgba(45,212,191,0.55)",
     chip: "01",
+    luxe: false,
   },
   {
     icon: Wallet,
     title: "Modalin Bank Account",
     body: "Rekening bisnis digital terintegrasi BPR mitra di bawah POJK 22/2024. Seluruh transaksi UMKM ter-pull otomatis ke dashboard investor via open banking.",
-    accent: "from-gold-400/30 via-gold-500/10 to-transparent",
-    glow: "rgba(251,191,36,0.55)",
+    accent: "from-gold-400/40 via-gold-500/15 to-transparent",
+    glow: "rgba(251,191,36,0.7)",
     chip: "02",
+    luxe: true,
   },
   {
     icon: BarChart3,
@@ -28,6 +30,7 @@ const items = [
     accent: "from-brand-300/30 via-brand-500/10 to-transparent",
     glow: "rgba(94,234,212,0.55)",
     chip: "03",
+    luxe: false,
   },
 ];
 
@@ -35,12 +38,12 @@ export function SolutionTriad() {
   return (
     <Section>
       <div className="mb-12 max-w-2xl">
-        <div className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-400">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.5em] text-gold-300">
           Tiga modul terintegrasi
         </div>
-        <h2 className="mt-3 font-display text-4xl font-bold text-white sm:text-5xl">
+        <h2 className="mt-4 font-display text-4xl font-bold text-white sm:text-5xl">
           Bukan platform brokerage —{" "}
-          <span className="shimmer-text">operating system</span>{" "}
+          <span className="serif-italic gold-foil">operating system</span>{" "}
           pertumbuhan UMKM.
         </h2>
       </div>
@@ -60,6 +63,7 @@ function DepthCard({
   accent,
   glow,
   chip,
+  luxe,
   index,
 }: {
   icon: React.ComponentType<{ className?: string }>;
@@ -68,6 +72,7 @@ function DepthCard({
   accent: string;
   glow: string;
   chip: string;
+  luxe: boolean;
   index: number;
 }) {
   const reduce = useReducedMotion();
@@ -109,7 +114,11 @@ function DepthCard({
         onMouseLeave={onLeave}
         style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
         whileHover={{ scale: 1.02 }}
-        className="group relative h-full overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/60 p-7 backdrop-blur transition-colors hover:border-zinc-700"
+        className={`group relative h-full overflow-hidden rounded-2xl p-7 backdrop-blur transition-colors ${
+          luxe
+            ? "bevel-card gold-ring"
+            : "border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700"
+        }`}
       >
         <motion.div
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -126,7 +135,10 @@ function DepthCard({
               / {chip}
             </span>
           </div>
-          <h3 className="mt-5 font-display text-xl font-semibold text-white" style={{ transform: "translateZ(20px)" }}>
+          <h3
+            className={`mt-5 font-display text-xl font-semibold ${luxe ? "gold-foil" : "text-white"}`}
+            style={{ transform: "translateZ(20px)" }}
+          >
             {title}
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-zinc-400">{body}</p>

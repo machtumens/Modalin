@@ -143,13 +143,13 @@ export function Hero() {
               <SpatialWord text="Modal" z={20} />{" "}
               <SpatialWord text="untuk" z={-15} />{" "}
               <span className="relative inline-block" style={{ transform: "translateZ(40px)" }}>
-                <span className="shimmer-text">UMKM bertumbuh</span>
+                <span className="serif-italic gold-foil">UMKM bertumbuh</span>
                 <motion.span
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ delay: 0.6, duration: 0.8, ease: "circOut" }}
                   style={{ transformOrigin: "left" }}
-                  className="absolute -bottom-1 left-0 h-[3px] w-full bg-linear-to-r from-brand-400 via-gold-400 to-transparent"
+                  className="absolute -bottom-1 left-0 h-[2px] w-full bg-linear-to-r from-gold-400 via-gold-200 to-transparent"
                 />
               </span>
               ,
@@ -157,7 +157,7 @@ export function Hero() {
               <SpatialWord text="akses" z={10} />{" "}
               <SpatialWord text="untuk" z={-20} />{" "}
               <span style={{ transform: "translateZ(30px)" }}>
-                <span className="shimmer-text">investor baru</span>.
+                <span className="serif-italic platinum-foil">investor baru</span>.
               </span>
             </motion.h1>
 

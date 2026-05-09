@@ -2,6 +2,7 @@ import { Hero } from "@/components/marketing/hero";
 import { ProblemStrip } from "@/components/marketing/problem-strip";
 import { StatMarquee } from "@/components/marketing/stat-marquee";
 import { SpatialDeck } from "@/components/marketing/spatial-deck";
+import { Manifesto } from "@/components/marketing/manifesto";
 import { SolutionTriad } from "@/components/marketing/solution-triad";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { AIScoreTeaser } from "@/components/marketing/ai-score-teaser";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Hero />
       <StatMarquee />
       <SpatialDeck />
+      <Manifesto />
       <ProblemStrip />
       <SolutionTriad />
       <HowItWorks />
