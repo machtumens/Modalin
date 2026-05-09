@@ -16,6 +16,7 @@ import { Magnetic } from "./magnetic";
 import { ScrambleText } from "./scramble-text";
 import { FeatureDeck } from "./feature-deck";
 import { ScrollHintInline } from "./scroll-cue";
+import { ConfettiClick } from "./confetti-burst";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -150,15 +151,17 @@ export function Hero() {
 
             <motion.div variants={child} className="mt-10 flex flex-wrap gap-3">
               <Magnetic>
-                <Button asChild size="lg" className="group relative overflow-hidden bg-brand-500 text-zinc-950 shadow-[0_0_50px_-8px_rgba(45,212,191,0.7)] hover:bg-brand-400">
-                  <Link href="/marketplace">
-                    <span className="relative z-10 flex items-center gap-2">
-                      Mulai Investasi Rp100rb
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </span>
-                    <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                  </Link>
-                </Button>
+                <ConfettiClick>
+                  <Button asChild size="lg" className="group relative overflow-hidden bg-brand-500 text-zinc-950 shadow-[0_0_50px_-8px_rgba(45,212,191,0.7)] hover:bg-brand-400">
+                    <Link href="/marketplace">
+                      <span className="relative z-10 flex items-center gap-2">
+                        Mulai Investasi Rp100rb
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </span>
+                      <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                    </Link>
+                  </Button>
+                </ConfettiClick>
               </Magnetic>
               <Magnetic strength={0.25}>
                 <Button asChild size="lg" variant="outline" className="border-zinc-700 bg-zinc-900/40 text-white backdrop-blur hover:border-brand-400 hover:bg-zinc-900/60 hover:text-brand-300">

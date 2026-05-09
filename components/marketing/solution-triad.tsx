@@ -1,14 +1,20 @@
 "use client";
-import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
-import { Store, Wallet, BarChart3, ArrowUpRight } from "lucide-react";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
+import { Store, Wallet, BarChart3, Plus, Check } from "lucide-react";
 import { Section } from "./section";
 
 const items = [
   {
     icon: Store,
     title: "ECF Marketplace",
-    body: "Pendanaan ekuitas Rp50–500 jt untuk UMKM early-growth dengan AI scoring berbasis data alternatif. Investor mulai dari Rp100.000 — terendah di industri.",
+    body: "Pendanaan ekuitas Rp50–500 jt untuk UMKM early-growth dengan AI scoring berbasis data alternatif.",
+    bullets: [
+      "Min ticket investor Rp100.000 — terendah di industri",
+      "Filter sektor: F&B, Retail, Agri, Jasa",
+      "Cap funding 30 hari per kampanye",
+      "Bagi hasil ekuitas 100% — zero riba",
+    ],
     accent: "from-brand-400/30 via-brand-500/10 to-transparent",
     glow: "rgba(45,212,191,0.55)",
     chip: "01",
@@ -17,7 +23,13 @@ const items = [
   {
     icon: Wallet,
     title: "Modalin Bank Account",
-    body: "Rekening bisnis digital terintegrasi BPR mitra di bawah POJK 22/2024. Seluruh transaksi UMKM ter-pull otomatis ke dashboard investor via open banking.",
+    body: "Rekening bisnis digital terintegrasi BPR mitra di bawah POJK 22/2024.",
+    bullets: [
+      "8 BPR mitra di kota-kota pertumbuhan UMKM",
+      "Pull transaksi otomatis lewat open banking",
+      "Tanpa biaya admin untuk merchant onboard",
+      "QRIS, transfer, dan reimbursement built-in",
+    ],
     accent: "from-gold-400/40 via-gold-500/15 to-transparent",
     glow: "rgba(251,191,36,0.7)",
     chip: "02",
@@ -26,7 +38,13 @@ const items = [
   {
     icon: BarChart3,
     title: "Investor Dashboard",
-    body: "Modalin Community (≥5% kepemilikan), Index Fund auto-diversifikasi 10–20 UMKM, dan reimbursement on-demand divalidasi AI terhadap harga pasar real-time.",
+    body: "Modalin Community, Index Fund auto-diversifikasi, dan reimbursement on-demand.",
+    bullets: [
+      "Community room ≥5% kepemilikan UMKM",
+      "Index Fund: Conservative / Balanced / Growth",
+      "AI validasi harga supplier vs harga pasar",
+      "Live activity feed dari open banking",
+    ],
     accent: "from-brand-300/30 via-brand-500/10 to-transparent",
     glow: "rgba(94,234,212,0.55)",
     chip: "03",
@@ -46,6 +64,9 @@ export function SolutionTriad() {
           <span className="serif-italic gold-foil">operating system</span>{" "}
           pertumbuhan UMKM.
         </h2>
+        <p className="mt-3 text-xs uppercase tracking-[0.3em] text-zinc-500">
+          Tap kartu untuk lihat detail
+        </p>
       </div>
       <div className="grid gap-6 md:grid-cols-3">
         {items.map((it, i) => (
@@ -60,6 +81,7 @@ function DepthCard({
   icon: Icon,
   title,
   body,
+  bullets,
   accent,
   glow,
   chip,
@@ -69,6 +91,7 @@ function DepthCard({
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   body: string;
+  bullets: string[];
   accent: string;
   glow: string;
   chip: string;
@@ -77,12 +100,13 @@ function DepthCard({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
   const sx = useSpring(mx, { stiffness: 150, damping: 20 });
   const sy = useSpring(my, { stiffness: 150, damping: 20 });
-  const rotX = useTransform(sy, [0, 1], [10, -10]);
-  const rotY = useTransform(sx, [0, 1], [-10, 10]);
+  const rotX = useTransform(sy, [0, 1], [8, -8]);
+  const rotY = useTransform(sx, [0, 1], [-8, 8]);
   const bgGlow = useTransform(
     [sx, sy] as never,
     ([x, y]: number[]) => `radial-gradient(450px circle at ${x * 100}% ${y * 100}%, ${glow}, transparent 50%)`
@@ -102,19 +126,22 @@ function DepthCard({
 
   return (
     <motion.div
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 40 }}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay: index * 0.08 }}
       style={{ perspective: 1200 }}
     >
       <motion.div
         ref={ref}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
+        onClick={() => setOpen((v) => !v)}
         style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
-        whileHover={{ scale: 1.02 }}
-        className={`group relative h-full overflow-hidden rounded-2xl p-7 backdrop-blur transition-colors ${
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        layout
+        className={`group relative h-full cursor-pointer overflow-hidden rounded-2xl p-7 backdrop-blur transition-colors ${
           luxe
             ? "bevel-card gold-ring"
             : "border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700"
@@ -128,12 +155,24 @@ function DepthCard({
 
         <div className="relative" style={{ transform: "translateZ(40px)" }}>
           <div className="flex items-start justify-between">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-950 text-brand-400 transition-all duration-300 group-hover:border-brand-400/60 group-hover:text-brand-300 group-hover:shadow-[0_0_30px_-5px_rgba(45,212,191,0.6)]">
+            <div className={`flex h-12 w-12 items-center justify-center rounded-xl border bg-zinc-950 transition-all duration-300 ${
+              luxe
+                ? "border-gold-400/50 text-gold-300 shadow-[0_0_24px_-5px_rgba(251,191,36,0.55)]"
+                : "border-zinc-700 text-brand-400 group-hover:border-brand-400/60 group-hover:text-brand-300 group-hover:shadow-[0_0_30px_-5px_rgba(45,212,191,0.6)]"
+            }`}>
               <Icon className="h-5 w-5" />
             </div>
-            <span className="font-mono text-xs uppercase tracking-widest text-zinc-600 transition-colors group-hover:text-brand-400">
-              / {chip}
-            </span>
+            <motion.span
+              animate={{ rotate: open ? 45 : 0 }}
+              transition={{ duration: 0.25 }}
+              className={`flex h-7 w-7 items-center justify-center rounded-full border ${
+                luxe
+                  ? "border-gold-400/50 bg-gold-400/10 text-gold-300"
+                  : "border-zinc-700 bg-zinc-900 text-brand-300"
+              }`}
+            >
+              <Plus className="h-3.5 w-3.5" />
+            </motion.span>
           </div>
           <h3
             className={`mt-5 font-display text-xl font-semibold ${luxe ? "gold-foil" : "text-white"}`}
@@ -143,18 +182,38 @@ function DepthCard({
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-zinc-400">{body}</p>
 
-          <motion.div
-            className="mt-6 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-brand-400"
-            initial={{ opacity: 0, x: -8 }}
-            whileHover={{ opacity: 1, x: 0 }}
-            animate={{ opacity: 0.6 }}
-          >
-            <span>Eksplorasi modul</span>
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </motion.div>
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.ul
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-5 space-y-2 overflow-hidden border-t border-zinc-800 pt-4"
+              >
+                {bullets.map((b, i) => (
+                  <motion.li
+                    key={b}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.2 }}
+                    className="flex items-start gap-2 text-xs leading-relaxed text-zinc-300"
+                  >
+                    <Check className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${luxe ? "text-gold-300" : "text-brand-400"}`} />
+                    <span>{b}</span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+
+          {!open && (
+            <div className="mt-6 inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              tap untuk lihat fitur
+            </div>
+          )}
         </div>
 
-        {/* corner glyphs */}
         <div className="pointer-events-none absolute right-3 bottom-3 font-mono text-[120px] font-bold leading-none text-zinc-800/40 transition-colors group-hover:text-zinc-700/50">
           {chip}
         </div>

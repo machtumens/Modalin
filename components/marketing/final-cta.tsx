@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Section } from "./section";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "./magnetic";
+import { ConfettiClick } from "./confetti-burst";
 
 export function FinalCTA() {
   return (
@@ -41,14 +42,16 @@ export function FinalCTA() {
 
           <div className="mt-10 flex flex-wrap gap-3">
             <Magnetic strength={0.4}>
-              <Button asChild size="lg" className="group bg-brand-500 text-zinc-950 shadow-[0_0_60px_-8px_rgba(45,212,191,0.8)] hover:bg-brand-400">
-                <Link href="/marketplace">
-                  <span className="flex items-center gap-2">
-                    Mulai Investasi
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              </Button>
+              <ConfettiClick>
+                <Button asChild size="lg" className="group bg-brand-500 text-zinc-950 shadow-[0_0_60px_-8px_rgba(45,212,191,0.8)] hover:bg-brand-400">
+                  <Link href="/marketplace">
+                    <span className="flex items-center gap-2">
+                      Mulai Investasi
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </Button>
+              </ConfettiClick>
             </Magnetic>
             <Magnetic strength={0.3}>
               <Button asChild size="lg" variant="outline" className="border-zinc-700 bg-transparent text-white hover:border-brand-400 hover:bg-zinc-900/40 hover:text-brand-300">

@@ -1,6 +1,6 @@
 "use client";
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Coins, BarChart3, Wallet } from "lucide-react";
 
 const cards = [
@@ -42,9 +42,38 @@ const cards = [
 export function SpatialDeck() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const sceneRotX = useTransform(scrollYProgress, [0, 1], [12, -12]);
-  const sceneRotY = useTransform(scrollYProgress, [0, 1], [-6, 6]);
+  const scrollRotX = useTransform(scrollYProgress, [0, 1], [12, -12]);
+  const scrollRotY = useTransform(scrollYProgress, [0, 1], [-6, 6]);
+
+  const dragRotX = useMotionValue(0);
+  const dragRotY = useMotionValue(0);
+  const sRotX = useSpring(dragRotX, { stiffness: 120, damping: 18 });
+  const sRotY = useSpring(dragRotY, { stiffness: 120, damping: 18 });
+  const [dragging, setDragging] = useState(false);
+  const drag = useRef<{ x: number; y: number } | null>(null);
+
+  const sceneRotX = useTransform([scrollRotX, sRotX] as never, ([a, b]: number[]) => a + b);
+  const sceneRotY = useTransform([scrollRotY, sRotY] as never, ([a, b]: number[]) => a + b);
+
+  const onDown = (e: React.PointerEvent) => {
+    setDragging(true);
+    drag.current = { x: e.clientX, y: e.clientY };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+  const onMove = (e: React.PointerEvent) => {
+    if (!dragging || !drag.current) return;
+    const dx = e.clientX - drag.current.x;
+    const dy = e.clientY - drag.current.y;
+    dragRotY.set(dragRotY.get() + dx * 0.25);
+    dragRotX.set(dragRotX.get() - dy * 0.25);
+    drag.current = { x: e.clientX, y: e.clientY };
+  };
+  const onUp = () => {
+    setDragging(false);
+    drag.current = null;
+  };
 
   return (
     <section ref={ref} className="relative scene-3d overflow-hidden bg-zinc-950 py-16 lg:py-20">
@@ -66,7 +95,14 @@ export function SpatialDeck() {
           </h2>
         </div>
 
-        <div className="relative h-[440px] sm:h-[480px]">
+        <div
+          ref={stage}
+          onPointerDown={reduce ? undefined : onDown}
+          onPointerMove={reduce ? undefined : onMove}
+          onPointerUp={reduce ? undefined : onUp}
+          onPointerCancel={reduce ? undefined : onUp}
+          className={`relative h-[440px] touch-none select-none sm:h-[480px] ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
+        >
           <motion.div
             style={{
               rotateX: reduce ? 0 : sceneRotX,
@@ -80,6 +116,9 @@ export function SpatialDeck() {
               <FloatingCard key={c.title} card={c} index={i} />
             ))}
           </motion.div>
+          <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-gold-400/30 bg-zinc-950/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.3em] text-gold-300 backdrop-blur">
+            ↻ drag untuk putar
+          </div>
         </div>
       </div>
     </section>
