@@ -11,11 +11,13 @@ import { ProjectionChart } from "@/components/marketing/projection-chart";
 import { FinalCTA } from "@/components/marketing/final-cta";
 import { CursorSpotlight } from "@/components/marketing/cursor-spotlight";
 import { ScrollProgress } from "@/components/marketing/scroll-progress";
+import { ScrollCue } from "@/components/marketing/scroll-cue";
 
 export default function HomePage() {
   return (
     <>
       <ScrollProgress />
+      <ScrollCue />
       <CursorSpotlight />
       <Hero />
       <StatMarquee />

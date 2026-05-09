@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Magnetic } from "./magnetic";
 import { ScrambleText } from "./scramble-text";
 import { FeatureDeck } from "./feature-deck";
+import { ScrollHintInline } from "./scroll-cue";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -170,6 +171,10 @@ export function Hero() {
               <MicroStat label="Min ticket" value="Rp100rb" />
               <MicroStat label="Mitra BPR" value="8 kota" />
               <MicroStat label="Bagi hasil" value="100%" />
+            </motion.div>
+
+            <motion.div variants={child}>
+              <ScrollHintInline />
             </motion.div>
           </motion.div>
 
