@@ -1,40 +1,46 @@
 "use client";
 import { useState } from "react";
-import { AreaChart, BarChart } from "@tremor/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, TrendingUp, Wallet, Users, Building2 } from "lucide-react";
 import { Section } from "./section";
+import { StackedBars, RevenueOpexChart } from "./charts";
 
 type Scenario = "bear" | "base" | "best";
 
 const revenueStack = [
   {
     tahun: "Y1",
-    "Success Fee": 180,
-    "Management Fee": 36,
-    "Revenue Sharing": 70.2,
-    "Premium Listing": 70.2,
+    segments: [
+      { key: "Success Fee", value: 180, color: "#2dd4bf" },
+      { key: "Management Fee", value: 36, color: "#fbbf24" },
+      { key: "Revenue Sharing", value: 70.2, color: "#34d399" },
+      { key: "Premium Listing", value: 70.2, color: "#fde047" },
+    ],
   },
   {
     tahun: "Y2",
-    "Success Fee": 630,
-    "Management Fee": 198,
-    "Revenue Sharing": 440.1,
-    "Premium Listing": 293.4,
+    segments: [
+      { key: "Success Fee", value: 630, color: "#2dd4bf" },
+      { key: "Management Fee", value: 198, color: "#fbbf24" },
+      { key: "Revenue Sharing", value: 440.1, color: "#34d399" },
+      { key: "Premium Listing", value: 293.4, color: "#fde047" },
+    ],
   },
   {
     tahun: "Y3",
-    "Success Fee": 1224,
-    "Management Fee": 568.8,
-    "Revenue Sharing": 1211.76,
-    "Premium Listing": 712.8,
+    segments: [
+      { key: "Success Fee", value: 1224, color: "#2dd4bf" },
+      { key: "Management Fee", value: 568.8, color: "#fbbf24" },
+      { key: "Revenue Sharing", value: 1211.76, color: "#34d399" },
+      { key: "Premium Listing", value: 712.8, color: "#fde047" },
+    ],
   },
 ];
 
 const ebitdaPath = [
-  { tahun: "Y1", "Revenue": 356.4, "OPEX": 1050, "EBITDA": -693.6 },
-  { tahun: "Y2", "Revenue": 1561.5, "OPEX": 2250, "EBITDA": -688.5 },
-  { tahun: "Y3", "Revenue": 3717.36, "OPEX": 3300, "EBITDA": 417.36 },
+  { tahun: "Y1", revenue: 356.4, opex: 1050 },
+  { tahun: "Y2", revenue: 1561.5, opex: 2250 },
+  { tahun: "Y3", revenue: 3717.36, opex: 3300 },
 ];
 
 const scenarios: Record<Scenario, {
@@ -113,16 +119,10 @@ export function ProjectionChart() {
           title="4 stream menumpuk"
           subtitle="Rp juta · Y1 → Y3"
         >
-          <BarChart
-            className="h-72 dark-tremor"
+          <StackedBars
             data={revenueStack}
-            index="tahun"
-            categories={["Success Fee", "Management Fee", "Revenue Sharing", "Premium Listing"]}
-            colors={["teal", "amber", "emerald", "yellow"]}
-            stack
-            showLegend
-            showAnimation
-            valueFormatter={(n) => `${n.toLocaleString("id-ID")} jt`}
+            height={280}
+            formatValue={(n) => `${n.toLocaleString("id-ID")} jt`}
           />
           <div className="mt-5 grid grid-cols-3 gap-3 border-t border-zinc-800 pt-4">
             <Mini label="Y1 Total" value="Rp 356,4 jt" />
@@ -137,15 +137,10 @@ export function ProjectionChart() {
           title="EBITDA crossover Y3"
           subtitle="Revenue vs OPEX · Rp juta"
         >
-          <AreaChart
-            className="h-72 dark-tremor"
+          <RevenueOpexChart
             data={ebitdaPath}
-            index="tahun"
-            categories={["Revenue", "OPEX"]}
-            colors={["teal", "rose"]}
-            showAnimation
-            showLegend
-            valueFormatter={(n) => `${n.toLocaleString("id-ID")} jt`}
+            height={280}
+            formatValue={(n) => `${n.toLocaleString("id-ID")} jt`}
           />
           <div className="mt-5 grid grid-cols-3 gap-3 border-t border-zinc-800 pt-4">
             <Mini label="Y1 EBITDA" value="-Rp 693,6 jt" tone="bad" />
