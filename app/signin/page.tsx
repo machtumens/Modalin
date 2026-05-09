@@ -19,8 +19,8 @@ export default async function SigninPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-8 text-center">
-        <h1 className="font-display text-3xl font-bold">Pilih persona demo</h1>
-        <p className="mt-2 text-sm text-zinc-500">
+        <h1 className="font-display text-3xl font-bold text-white">Pilih persona demo</h1>
+        <p className="mt-2 text-sm text-zinc-400">
           Prototype klikable. Tidak ada password — pilih peran untuk mulai eksplorasi.
         </p>
       </div>
@@ -36,7 +36,7 @@ export default async function SigninPage() {
           >
             <Card className="h-full transition-shadow hover:shadow-md">
               <CardHeader>
-                <div className="text-xs font-semibold uppercase tracking-wide text-brand-700">{p.role}</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-400">{p.role}</div>
                 <CardTitle className="mt-1 text-lg">{p.name}</CardTitle>
                 <CardDescription className="mt-2">{p.desc}</CardDescription>
               </CardHeader>
@@ -48,7 +48,7 @@ export default async function SigninPage() {
         ))}
       </div>
       <div className="mt-8 text-center text-xs text-zinc-500">
-        <Link href="/" className="hover:text-brand-700">← Kembali ke beranda</Link>
+        <Link href="/" className="hover:text-brand-400">← Kembali ke beranda</Link>
       </div>
     </div>
   );

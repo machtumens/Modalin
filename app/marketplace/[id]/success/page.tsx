@@ -19,14 +19,14 @@ export default async function InvestSuccessPage({
   return (
     <div className="mx-auto max-w-xl px-4 py-16 sm:px-6 lg:px-8">
       <Confetti />
-      <div className="rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm">
-        <div className="font-display text-2xl font-bold text-brand-700">Investasi berhasil!</div>
-        <p className="mt-2 text-sm text-zinc-600">
-          Anda baru saja menginvestasikan <span className="font-semibold text-zinc-900">{formatIDR(amount)}</span> untuk ekuitas <span className="font-semibold text-zinc-900">{equity.toFixed(3)}%</span>.
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 text-center shadow-sm backdrop-blur">
+        <div className="font-display text-2xl font-bold text-brand-300">Investasi berhasil!</div>
+        <p className="mt-2 text-sm text-zinc-400">
+          Anda baru saja menginvestasikan <span className="font-semibold text-white">{formatIDR(amount)}</span> untuk ekuitas <span className="font-semibold text-white">{equity.toFixed(3)}%</span>.
         </p>
         {community && (
-          <div className="mt-6 rounded-lg bg-amber-50 p-4 text-sm text-amber-800">
-            🎉 Kepemilikan Anda ≥5%. Anda kini berhak akses Modalin Community untuk UMKM ini.
+          <div className="mt-6 rounded-lg bg-gold-500/15 p-4 text-sm text-gold-300 ring-1 ring-inset ring-gold-400/30">
+            Kepemilikan Anda ≥5%. Anda kini berhak akses Modalin Community untuk UMKM ini.
           </div>
         )}
         <div className="mt-6 flex flex-wrap justify-center gap-2">

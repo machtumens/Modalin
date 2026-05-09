@@ -14,8 +14,8 @@ export default async function AdminDashboard() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <h1 className="font-display text-3xl font-bold">Admin Console</h1>
-      <p className="mt-1 text-sm text-zinc-500">Metrik platform demo (data seed).</p>
+      <h1 className="font-display text-3xl font-bold text-white">Admin Console</h1>
+      <p className="mt-1 text-sm text-zinc-400">Metrik platform demo (data seed).</p>
       <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Stat label="Total AUM" value={formatIDR(m.totalAum)} />
         <Stat label="UMKM Terdanai" value={`${m.umkmFunded}`} />
@@ -28,17 +28,17 @@ export default async function AdminDashboard() {
         <Card>
           <CardHeader><CardTitle>Curation Queue</CardTitle></CardHeader>
           <CardContent>
-            <div className="font-display text-3xl font-bold">{pendingPitch}</div>
-            <div className="text-xs text-zinc-500">pitch menunggu review</div>
-            <Link href="/admin/umkm" className="mt-3 inline-block text-sm text-brand-700 hover:underline">Buka antrian →</Link>
+            <div className="font-display text-3xl font-bold text-white">{pendingPitch}</div>
+            <div className="text-xs text-zinc-400">pitch menunggu review</div>
+            <Link href="/admin/umkm" className="mt-3 inline-block text-sm text-brand-400 hover:text-brand-300">Buka antrian →</Link>
           </CardContent>
         </Card>
         <Card>
           <CardHeader><CardTitle>Payout Queue</CardTitle></CardHeader>
           <CardContent>
-            <div className="font-display text-3xl font-bold">{pendingPayouts}</div>
-            <div className="text-xs text-zinc-500">reimbursement menunggu approval</div>
-            <Link href="/admin/payouts" className="mt-3 inline-block text-sm text-brand-700 hover:underline">Buka payouts →</Link>
+            <div className="font-display text-3xl font-bold text-white">{pendingPayouts}</div>
+            <div className="text-xs text-zinc-400">reimbursement menunggu approval</div>
+            <Link href="/admin/payouts" className="mt-3 inline-block text-sm text-brand-400 hover:text-brand-300">Buka payouts →</Link>
           </CardContent>
         </Card>
       </section>
@@ -50,8 +50,8 @@ function Stat({ label, value }: { label: string; value: string }) {
   return (
     <Card>
       <CardContent className="p-5">
-        <div className="text-xs uppercase tracking-wide text-zinc-500">{label}</div>
-        <div className="mt-1 font-display text-2xl font-bold text-zinc-900">{value}</div>
+        <div className="text-xs uppercase tracking-wide text-zinc-400">{label}</div>
+        <div className="mt-1 font-display text-2xl font-bold text-white">{value}</div>
       </CardContent>
     </Card>
   );

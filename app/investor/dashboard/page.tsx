@@ -34,12 +34,12 @@ export default async function InvestorDashboard() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-3xl font-bold">Dashboard Investor</h1>
-          <p className="mt-1 text-sm text-zinc-500">
+          <h1 className="font-display text-3xl font-bold text-white">Dashboard Investor</h1>
+          <p className="mt-1 text-sm text-zinc-400">
             Portofolio Anda + transparansi real-time dari Modalin Bank Account.
           </p>
         </div>
-        <Link href="/marketplace" className="text-sm font-medium text-brand-700 hover:underline">
+        <Link href="/marketplace" className="text-sm font-medium text-brand-400 hover:text-brand-300">
           Cari UMKM baru →
         </Link>
       </header>
@@ -62,35 +62,35 @@ export default async function InvestorDashboard() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_360px]">
         <section>
-          <h2 className="mb-3 font-display text-xl font-semibold">Live Activity</h2>
+          <h2 className="mb-3 font-display text-xl font-semibold text-white">Live Activity</h2>
           <LiveActivityFeed initial={initialFeed} />
         </section>
         <section>
-          <h2 className="mb-3 font-display text-xl font-semibold">Saran UMKM</h2>
+          <h2 className="mb-3 font-display text-xl font-semibold text-white">Saran UMKM</h2>
           <div className="space-y-3">
             {suggestions.map((u) => (
               <Link
                 key={u.id}
                 href={`/marketplace/${u.id}`}
-                className="block rounded-md border border-zinc-200 bg-white p-3 hover:border-brand-700"
+                className="block rounded-md border border-zinc-800 bg-zinc-900/50 p-3 backdrop-blur transition-colors hover:border-brand-400/60"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-zinc-900">{u.name}</span>
+                  <span className="font-medium text-white">{u.name}</span>
                   <Badge variant={aiBadgeVariant(u.aiScoreOverride ?? u.aiScore)}>
                     AI {u.aiScoreOverride ?? u.aiScore}
                   </Badge>
                 </div>
-                <div className="mt-1 text-xs text-zinc-500">
+                <div className="mt-1 text-xs text-zinc-400">
                   {sectorLabel[u.sector] ?? u.sector} · {u.location} · target {formatIDRCompact(u.fundingTargetIDR)}
                 </div>
               </Link>
             ))}
           </div>
           <div className="mt-6">
-            <Link href="/investor/index-fund" className="block rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 p-5 text-white">
-              <div className="text-xs uppercase tracking-wide opacity-80">Modalin Index Fund</div>
+            <Link href="/investor/index-fund" className="block rounded-xl border border-brand-400/30 bg-gradient-to-br from-brand-600/40 to-brand-900/40 p-5 text-white backdrop-blur transition-colors hover:border-brand-400/60">
+              <div className="text-xs uppercase tracking-wide text-brand-300">Modalin Index Fund</div>
               <div className="mt-1 font-semibold">Diversifikasi otomatis ke 15 UMKM</div>
-              <div className="mt-2 text-xs opacity-80">Konservatif · Balanced · Growth →</div>
+              <div className="mt-2 text-xs text-zinc-300">Konservatif · Balanced · Growth →</div>
             </Link>
           </div>
         </section>
@@ -98,8 +98,8 @@ export default async function InvestorDashboard() {
 
       {seedHoldings.length === 0 && (
         <Card className="mt-10">
-          <CardContent className="py-8 text-center text-sm text-zinc-500">
-            Belum ada investasi. <Link href="/marketplace" className="text-brand-700 underline">Mulai dari Marketplace</Link>.
+          <CardContent className="py-8 text-center text-sm text-zinc-400">
+            Belum ada investasi. <Link href="/marketplace" className="text-brand-400 underline">Mulai dari Marketplace</Link>.
           </CardContent>
         </Card>
       )}

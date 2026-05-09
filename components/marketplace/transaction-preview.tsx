@@ -10,10 +10,10 @@ export function TransactionPreview({
   outflow: { name: string; value: number }[];
 }) {
   return (
-    <div className="relative rounded-xl border border-zinc-200 bg-white p-6">
+    <div className="relative rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <div className="text-sm font-semibold text-emerald-700">Inflow 7 hari</div>
+          <div className="text-sm font-semibold text-brand-400">Inflow 7 hari</div>
           <BarList
             className="mt-3"
             data={inflow.map((i) => ({ name: i.name, value: i.value }))}
@@ -22,7 +22,7 @@ export function TransactionPreview({
           />
         </div>
         <div>
-          <div className="text-sm font-semibold text-red-700">Outflow 7 hari</div>
+          <div className="text-sm font-semibold text-red-400">Outflow 7 hari</div>
           <BarList
             className="mt-3"
             data={outflow.map((i) => ({ name: i.name, value: i.value }))}
@@ -31,9 +31,9 @@ export function TransactionPreview({
           />
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 rounded-b-xl bg-gradient-to-t from-white via-white/85 to-transparent flex items-end justify-center pb-4">
-        <span className="rounded-full bg-zinc-900/90 px-4 py-1.5 text-xs text-white">
-          🔒 Investasikan Rp100rb untuk akses real-time penuh
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 rounded-b-xl bg-gradient-to-t from-zinc-950 via-zinc-950/85 to-transparent flex items-end justify-center pb-4">
+        <span className="rounded-full bg-brand-500/20 px-4 py-1.5 text-xs text-brand-200 ring-1 ring-inset ring-brand-400/30">
+          Investasikan Rp100rb untuk akses real-time penuh
         </span>
       </div>
     </div>

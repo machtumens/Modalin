@@ -58,8 +58,8 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
               {u.syariahCompliant && <Badge>Syariah</Badge>}
               <Badge variant="muted">Funding aktif</Badge>
             </div>
-            <h1 className="mt-3 font-display text-4xl font-bold">{u.name}</h1>
-            <div className="mt-2 text-sm text-zinc-500">
+            <h1 className="mt-3 font-display text-4xl font-bold text-white">{u.name}</h1>
+            <div className="mt-2 text-sm text-zinc-400">
               Pendiri {u.ownerName} · {u.location}, {u.province}
             </div>
           </header>
@@ -73,22 +73,22 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
             <KPI label="Sisa hari" value={`${daysLeft}`} />
           </section>
 
-          <section className="rounded-xl border border-zinc-200 bg-white p-6">
+          <section className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold">Progress pendanaan</span>
-              <span className="text-sm text-zinc-500">{pct}%</span>
+              <span className="text-sm font-semibold text-white">Progress pendanaan</span>
+              <span className="text-sm text-zinc-400">{pct}%</span>
             </div>
-            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-zinc-100">
-              <div className="h-full rounded-full bg-brand-700" style={{ width: `${pct}%` }} />
+            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-zinc-800">
+              <div className="h-full rounded-full bg-brand-500" style={{ width: `${pct}%` }} />
             </div>
-            <div className="mt-2 text-xs text-zinc-500">
-              Terkumpul <span className="font-medium text-zinc-900">{formatIDR(raised)}</span> dari {formatIDR(target)}
+            <div className="mt-2 text-xs text-zinc-400">
+              Terkumpul <span className="font-medium text-white">{formatIDR(raised)}</span> dari {formatIDR(target)}
             </div>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold">Tentang bisnis</h2>
-            <div className="mt-3 space-y-3 text-sm leading-relaxed text-zinc-700">
+            <h2 className="font-display text-xl font-semibold text-white">Tentang bisnis</h2>
+            <div className="mt-3 space-y-3 text-sm leading-relaxed text-zinc-300">
               {u.story.split("\n\n").map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
@@ -96,8 +96,8 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold">AI Score</h2>
-            <p className="mt-1 text-sm text-zinc-600">
+            <h2 className="font-display text-xl font-semibold text-white">AI Score</h2>
+            <p className="mt-1 text-sm text-zinc-400">
               Skor real-time dari model Modalin berdasarkan SLIK OJK, e-commerce velocity, dan perilaku digital.
             </p>
             <div className="mt-4">
@@ -106,8 +106,8 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold">Pratinjau transaksi 7 hari</h2>
-            <p className="mt-1 text-sm text-zinc-600">
+            <h2 className="font-display text-xl font-semibold text-white">Pratinjau transaksi 7 hari</h2>
+            <p className="mt-1 text-sm text-zinc-400">
               Setelah berinvestasi, akses penuh ke transaksi real-time terbuka di dashboard Anda.
             </p>
             <div className="mt-4">
@@ -131,9 +131,9 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
 
 function KPI({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-zinc-200 bg-white p-3">
-      <div className="text-[10px] uppercase tracking-wide text-zinc-500">{label}</div>
-      <div className="text-sm font-semibold text-zinc-900">{value}</div>
+    <div className="rounded-md border border-zinc-800 bg-zinc-900/50 p-3 backdrop-blur">
+      <div className="text-[10px] uppercase tracking-wide text-zinc-400">{label}</div>
+      <div className="text-sm font-semibold text-white">{value}</div>
     </div>
   );
 }

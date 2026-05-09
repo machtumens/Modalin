@@ -65,7 +65,7 @@ export function InvestorDashboardClient({
 
       {merged.length > 0 && (
         <section className="mt-8">
-          <h2 className="mb-3 font-display text-xl font-semibold">Top Holdings</h2>
+          <h2 className="mb-3 font-display text-xl font-semibold text-white">Top Holdings</h2>
           <Card>
             <CardHeader>
               <CardTitle>Portofolio Anda</CardTitle>
@@ -73,7 +73,7 @@ export function InvestorDashboardClient({
             <CardContent>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-100 text-left text-xs text-zinc-500">
+                  <tr className="border-b border-zinc-800/60 text-left text-xs text-zinc-400">
                     <th className="pb-2">UMKM</th>
                     <th className="pb-2">Sektor</th>
                     <th className="pb-2 text-right">Investasi</th>
@@ -86,19 +86,19 @@ export function InvestorDashboardClient({
                   {merged.slice(0, 5).map((h) => {
                     const access = h.equityPct >= 5;
                     return (
-                      <tr key={h.umkmId} className="border-b border-zinc-100 last:border-0">
+                      <tr key={h.umkmId} className="border-b border-zinc-800/60 last:border-0">
                         <td className="py-3">
-                          <Link href={`/investor/portfolio/${h.umkmId}`} className="font-medium text-zinc-900 hover:text-brand-700">
+                          <Link href={`/investor/portfolio/${h.umkmId}`} className="font-medium text-white hover:text-brand-400">
                             {h.umkmName}
                           </Link>
-                          {access && <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] text-amber-800">Komunitas</span>}
+                          {access && <span className="ml-2 rounded-full bg-gold-500/15 px-2 py-0.5 text-[10px] text-gold-300 ring-1 ring-inset ring-gold-400/30">Komunitas</span>}
                         </td>
-                        <td className="py-3 text-zinc-600">{sectorLabel[h.sector] ?? h.sector}</td>
-                        <td className="py-3 text-right font-medium">{formatIDRCompact(h.amountIDR)}</td>
-                        <td className="py-3 text-right">{h.equityPct.toFixed(2)}%</td>
-                        <td className="py-3 text-right">{h.aiScore || "—"}</td>
+                        <td className="py-3 text-zinc-400">{sectorLabel[h.sector] ?? h.sector}</td>
+                        <td className="py-3 text-right font-medium text-zinc-200">{formatIDRCompact(h.amountIDR)}</td>
+                        <td className="py-3 text-right text-zinc-200">{h.equityPct.toFixed(2)}%</td>
+                        <td className="py-3 text-right text-zinc-200">{h.aiScore || "—"}</td>
                         <td className="py-3 text-right">
-                          <Link href={`/investor/portfolio/${h.umkmId}`} className="text-xs text-brand-700 hover:underline">Detail →</Link>
+                          <Link href={`/investor/portfolio/${h.umkmId}`} className="text-xs text-brand-400 hover:text-brand-300">Detail →</Link>
                         </td>
                       </tr>
                     );
@@ -117,8 +117,8 @@ function KPI({ label, value }: { label: string; value: string }) {
   return (
     <Card>
       <CardContent className="p-5">
-        <div className="text-xs uppercase tracking-wide text-zinc-500">{label}</div>
-        <div className="mt-1 font-display text-2xl font-bold text-zinc-900">{value}</div>
+        <div className="text-xs uppercase tracking-wide text-zinc-400">{label}</div>
+        <div className="mt-1 font-display text-2xl font-bold text-white">{value}</div>
       </CardContent>
     </Card>
   );

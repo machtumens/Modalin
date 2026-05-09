@@ -62,8 +62,8 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
       <div className="space-y-6">
-        <div className="rounded-xl border border-zinc-200 bg-white p-6">
-          <div className="text-sm font-semibold">Strategi</div>
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
+          <div className="text-sm font-semibold text-white">Strategi</div>
           <div className="mt-3 grid gap-3 sm:grid-cols-3">
             {strategies.map((s) => {
               const on = strategy === s.id;
@@ -71,19 +71,19 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
                 <button
                   key={s.id}
                   onClick={() => setStrategy(s.id)}
-                  className={`rounded-lg border px-4 py-3 text-left transition-all ${on ? "border-brand-700 bg-brand-50" : "border-zinc-200 bg-white hover:border-brand-700"}`}
+                  className={`rounded-lg border px-4 py-3 text-left transition-all ${on ? "border-brand-400/60 bg-brand-500/10" : "border-zinc-800 bg-zinc-900 hover:border-brand-400/60"}`}
                 >
-                  <div className="text-sm font-semibold">{s.label}</div>
-                  <div className="mt-1 text-xs text-zinc-500">{s.note}</div>
+                  <div className="text-sm font-semibold text-white">{s.label}</div>
+                  <div className="mt-1 text-xs text-zinc-400">{s.note}</div>
                 </button>
               );
             })}
           </div>
         </div>
-        <div className="rounded-xl border border-zinc-200 bg-white p-6">
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
           <div className="flex items-center justify-between">
-            <div className="text-sm font-semibold">Jumlah investasi</div>
-            <div className="font-display text-xl font-bold text-brand-700">{formatIDR(amount)}</div>
+            <div className="text-sm font-semibold text-white">Jumlah investasi</div>
+            <div className="font-display text-xl font-bold text-brand-300">{formatIDR(amount)}</div>
           </div>
           <input
             type="range"
@@ -92,18 +92,18 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
             step={1_000_000}
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            className="mt-3 w-full accent-brand-700"
+            className="mt-3 w-full accent-brand-500"
           />
-          <div className="mt-1 flex justify-between text-[10px] text-zinc-500">
+          <div className="mt-1 flex justify-between text-[10px] text-zinc-400">
             <span>Rp1 jt</span>
             <span>Rp100 jt</span>
           </div>
         </div>
 
-        <div className="rounded-xl border border-zinc-200 bg-white p-6">
-          <div className="mb-4 text-sm font-semibold">Alokasi ke {candidates.length} UMKM</div>
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
+          <div className="mb-4 text-sm font-semibold text-white">Alokasi ke {candidates.length} UMKM</div>
           {candidates.length === 0 ? (
-            <div className="rounded-md bg-zinc-50 p-4 text-sm text-zinc-500">
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-4 text-sm text-zinc-400">
               Tidak ada UMKM yang lulus kriteria strategi ini.
             </div>
           ) : (
@@ -119,7 +119,7 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
               <div className="mt-6 max-h-72 overflow-y-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-zinc-100 text-left text-xs text-zinc-500">
+                    <tr className="border-b border-zinc-800/60 text-left text-xs text-zinc-400">
                       <th className="pb-2">UMKM</th>
                       <th className="pb-2">Sektor</th>
                       <th className="pb-2 text-right">AI</th>
@@ -128,13 +128,13 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
                   </thead>
                   <tbody>
                     {allocation.map((a) => (
-                      <tr key={a.name} className="border-b border-zinc-100 last:border-0">
-                        <td className="py-2 font-medium">{a.name}</td>
-                        <td className="py-2 text-zinc-600">{sectorLabel[a.sector] ?? a.sector}</td>
+                      <tr key={a.name} className="border-b border-zinc-800/60 last:border-0">
+                        <td className="py-2 font-medium text-white">{a.name}</td>
+                        <td className="py-2 text-zinc-400">{sectorLabel[a.sector] ?? a.sector}</td>
                         <td className="py-2 text-right">
                           <Badge variant={aiBadgeVariant(a.aiScore)}>{a.aiScore}</Badge>
                         </td>
-                        <td className="py-2 text-right">{formatIDRCompact(a.value)}</td>
+                        <td className="py-2 text-right text-zinc-200">{formatIDRCompact(a.value)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -144,8 +144,8 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
           )}
         </div>
       </div>
-      <aside className="lg:sticky lg:top-24 self-start rounded-xl border border-zinc-200 bg-white p-6">
-        <div className="text-sm font-semibold">Ringkasan</div>
+      <aside className="lg:sticky lg:top-24 self-start rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
+        <div className="text-sm font-semibold text-white">Ringkasan</div>
         <div className="mt-4 space-y-2 text-sm">
           <Row k="Total investasi" v={formatIDR(amount)} />
           <Row k="Jumlah UMKM" v={`${candidates.length}`} />
@@ -155,17 +155,17 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
         <Button onClick={() => setOpen(true)} className="mt-6 w-full" size="lg" disabled={!candidates.length}>
           Investasikan via Index Fund
         </Button>
-        <p className="mt-3 text-[11px] leading-relaxed text-zinc-500">
+        <p className="mt-3 text-[11px] leading-relaxed text-zinc-400">
           Demo prototype — investasi disimpan di browser localStorage.
         </p>
       </aside>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900/60">
-          <div className="w-full max-w-md rounded-xl bg-white p-6">
-            <div className="font-display text-lg font-semibold">Konfirmasi Index Fund</div>
-            <p className="mt-2 text-sm text-zinc-600">
-              Investasi <span className="font-semibold text-zinc-900">{formatIDR(amount)}</span> ke {candidates.length} UMKM strategi <span className="font-semibold text-zinc-900">{strategy}</span>.
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/80 backdrop-blur">
+          <div className="w-full max-w-md rounded-xl border border-zinc-800 bg-zinc-900 p-6">
+            <div className="font-display text-lg font-semibold text-white">Konfirmasi Index Fund</div>
+            <p className="mt-2 text-sm text-zinc-400">
+              Investasi <span className="font-semibold text-white">{formatIDR(amount)}</span> ke {candidates.length} UMKM strategi <span className="font-semibold text-white">{strategy}</span>.
             </p>
             <div className="mt-5 flex justify-end gap-2">
               <Button variant="ghost" onClick={() => setOpen(false)} disabled={pending}>Batal</Button>
@@ -182,9 +182,9 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex items-center justify-between border-b border-zinc-100 pb-1.5 last:border-0">
-      <span className="text-zinc-500">{k}</span>
-      <span className="font-medium text-zinc-900">{v}</span>
+    <div className="flex items-center justify-between border-b border-zinc-800/60 pb-1.5 last:border-0">
+      <span className="text-zinc-400">{k}</span>
+      <span className="font-medium text-white">{v}</span>
     </div>
   );
 }

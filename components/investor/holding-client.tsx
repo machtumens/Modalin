@@ -31,9 +31,9 @@ export function HoldingClient({
 
 function KPI({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-zinc-200 bg-white p-4">
-      <div className="text-xs uppercase tracking-wide text-zinc-500">{label}</div>
-      <div className="mt-1 font-display text-xl font-bold text-zinc-900">{value}</div>
+    <div className="rounded-md border border-zinc-800 bg-zinc-900/50 p-4 backdrop-blur">
+      <div className="text-xs uppercase tracking-wide text-zinc-400">{label}</div>
+      <div className="mt-1 font-display text-xl font-bold text-white">{value}</div>
     </div>
   );
 }

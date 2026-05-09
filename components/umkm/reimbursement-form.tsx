@@ -58,7 +58,7 @@ export function ReimbursementForm() {
   }
 
   return (
-    <div className="mt-6 rounded-xl border border-zinc-200 bg-white p-6">
+    <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
       <div className="grid gap-4">
         <div>
           <Label htmlFor="cat">Kategori</Label>
@@ -66,7 +66,7 @@ export function ReimbursementForm() {
             id="cat"
             value={category}
             onChange={(e) => setCategory(e.target.value as keyof typeof CATEGORY_LABEL)}
-            className="mt-1 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-200"
           >
             {categories.map(([v, l]) => (
               <option key={v} value={v}>{l}</option>
@@ -81,7 +81,7 @@ export function ReimbursementForm() {
           <div>
             <Label htmlFor="amount">Jumlah (IDR)</Label>
             <Input id="amount" type="number" min={10_000} step={1000} value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
-            <div className="mt-1 text-xs text-zinc-500">{formatIDR(amount)}</div>
+            <div className="mt-1 text-xs text-zinc-400">{formatIDR(amount)}</div>
           </div>
         </div>
         <div>
@@ -97,14 +97,14 @@ export function ReimbursementForm() {
             required
             minLength={2}
             maxLength={500}
-            className="mt-1 h-24 w-full resize-none rounded-md border border-zinc-300 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-700"
+            className="mt-1 h-24 w-full resize-none rounded-md border border-zinc-700 bg-zinc-900 p-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
           />
         </div>
         {result && (
-          <div className={`rounded-md p-4 text-sm ${
-            result.verdict === "OK" ? "bg-emerald-50 text-emerald-800" :
-            result.verdict === "OVER" ? "bg-red-50 text-red-700" :
-            "bg-amber-50 text-amber-800"
+          <div className={`rounded-md p-4 text-sm ring-1 ring-inset ${
+            result.verdict === "OK" ? "bg-brand-500/15 text-brand-200 ring-brand-400/30" :
+            result.verdict === "OVER" ? "bg-red-500/15 text-red-300 ring-red-400/30" :
+            "bg-gold-500/15 text-gold-300 ring-gold-400/30"
           }`}>
             <div className="font-semibold">AI Verdict: {result.verdict} ({result.deltaPct >= 0 ? "+" : ""}{result.deltaPct}% vs harga pasar)</div>
             <div className="mt-1">{result.note}</div>
@@ -114,7 +114,7 @@ export function ReimbursementForm() {
         <Button onClick={submit} disabled={pending || !description}>
           {pending ? "Memproses..." : "Ajukan Reimbursement"}
         </Button>
-        <p className="text-[11px] leading-relaxed text-zinc-500">
+        <p className="text-[11px] leading-relaxed text-zinc-400">
           Demo prototype — pengajuan disimpan di browser localStorage. Tidak ada dana riil yang berpindah.
         </p>
       </div>

@@ -14,12 +14,12 @@ export default async function AdminPayoutsPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 space-y-6">
       <header>
-        <h1 className="font-display text-3xl font-bold">Payout Approval</h1>
-        <p className="mt-1 text-sm text-zinc-500">{items.length} reimbursement menunggu keputusan (data seed).</p>
+        <h1 className="font-display text-3xl font-bold text-white">Payout Approval</h1>
+        <p className="mt-1 text-sm text-zinc-400">{items.length} reimbursement menunggu keputusan (data seed).</p>
       </header>
 
       {items.length === 0 ? (
-        <Card><CardContent className="py-10 text-center text-sm text-zinc-500">Tidak ada antrian payout.</CardContent></Card>
+        <Card><CardContent className="py-10 text-center text-sm text-zinc-400">Tidak ada antrian payout.</CardContent></Card>
       ) : (
         <div className="grid gap-4">
           {items.map((r) => {
@@ -32,7 +32,7 @@ export default async function AdminPayoutsPage() {
                       <CardTitle className="text-base">
                         {u?.name} · {CATEGORY_LABEL[r.category as ReimbursementCategory] ?? r.category}
                       </CardTitle>
-                      <div className="mt-1 text-xs text-zinc-500">
+                      <div className="mt-1 text-xs text-zinc-400">
                         Pengajuan {new Date(r.createdAt).toLocaleString("id-ID")}
                       </div>
                     </div>
@@ -48,9 +48,9 @@ export default async function AdminPayoutsPage() {
                     <Cell k="Δ vs ref" v={`${r.deltaPct >= 0 ? "+" : ""}${r.deltaPct}%`} />
                     <Cell k="AI Verdict" v={r.verdict} />
                   </div>
-                  {r.supplier && <div><span className="text-zinc-500">Supplier:</span> {r.supplier}</div>}
-                  <div><span className="text-zinc-500">Deskripsi:</span> {r.description}</div>
-                  <p className="pt-2 text-xs text-zinc-500">Demo prototype — aksi approve/reject tidak tersedia di mode statis.</p>
+                  {r.supplier && <div className="text-zinc-300"><span className="text-zinc-400">Supplier:</span> {r.supplier}</div>}
+                  <div className="text-zinc-300"><span className="text-zinc-400">Deskripsi:</span> {r.description}</div>
+                  <p className="pt-2 text-xs text-zinc-400">Demo prototype — aksi approve/reject tidak tersedia di mode statis.</p>
                 </CardContent>
               </Card>
             );
@@ -63,9 +63,9 @@ export default async function AdminPayoutsPage() {
 
 function Cell({ k, v }: { k: string; v: string }) {
   return (
-    <div className="rounded-md border border-zinc-200 bg-white p-2">
-      <div className="text-[10px] uppercase tracking-wide text-zinc-500">{k}</div>
-      <div className="mt-0.5 font-medium text-zinc-900">{v}</div>
+    <div className="rounded-md border border-zinc-800 bg-zinc-900/60 p-2">
+      <div className="text-[10px] uppercase tracking-wide text-zinc-400">{k}</div>
+      <div className="mt-0.5 font-medium text-white">{v}</div>
     </div>
   );
 }

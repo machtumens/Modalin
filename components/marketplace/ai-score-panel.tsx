@@ -40,23 +40,23 @@ export function AIScorePanel({
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6">
+    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-sm font-semibold text-zinc-900">AI Score</div>
-          <div className="text-xs text-zinc-500">Skor 0–100. {override ? "Skor manual diberlakukan oleh admin." : "Skor real-time dari model Modalin."}</div>
+          <div className="text-sm font-semibold text-white">AI Score</div>
+          <div className="text-xs text-zinc-400">Skor 0–100. {override ? "Skor manual diberlakukan oleh admin." : "Skor real-time dari model Modalin."}</div>
         </div>
-        {override && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">Override</span>}
+        {override && <span className="rounded-full bg-gold-500/15 px-2 py-0.5 text-xs text-gold-300 ring-1 ring-inset ring-gold-400/30">Override</span>}
       </div>
       <div className="mt-4 flex items-center gap-6">
         <div className="relative h-32 w-32 shrink-0">
           <svg viewBox="0 0 128 128" className="h-full w-full -rotate-90">
-            <circle cx="64" cy="64" r="56" stroke="rgb(244 244 245)" strokeWidth="12" fill="none" />
+            <circle cx="64" cy="64" r="56" stroke="rgb(39 39 42)" strokeWidth="12" fill="none" />
             <motion.circle
               cx="64"
               cy="64"
               r="56"
-              stroke="rgb(15 118 110)"
+              stroke="rgb(20 184 166)"
               strokeWidth="12"
               fill="none"
               strokeLinecap="round"
@@ -68,20 +68,20 @@ export function AIScorePanel({
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="font-display text-3xl font-bold">{display}</span>
-            <span className="text-[10px] uppercase tracking-wide text-zinc-500">AI Score</span>
+            <span className="font-display text-3xl font-bold text-white">{display}</span>
+            <span className="text-[10px] uppercase tracking-wide text-zinc-400">AI Score</span>
           </div>
         </div>
         <div className="flex-1 space-y-3">
           {Object.entries(components).map(([k, val]) => (
             <div key={k}>
               <div className="mb-1 flex items-center justify-between text-xs">
-                <span className="text-zinc-700" title={tooltips[k]}>{labels[k] ?? k}</span>
-                <span className="font-medium text-zinc-900">{val}</span>
+                <span className="text-zinc-300" title={tooltips[k]}>{labels[k] ?? k}</span>
+                <span className="font-medium text-white">{val}</span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-800">
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-brand-600 to-gold-500"
+                  className="h-full rounded-full bg-gradient-to-r from-brand-500 to-gold-400"
                   initial={{ width: 0 }}
                   animate={{ width: `${val}%` }}
                   transition={{ duration: 0.9, ease: "easeOut" }}

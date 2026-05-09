@@ -23,29 +23,30 @@ export function UMKMCard({ d }: { d: UMKMCardData }) {
   return (
     <Link href={`/marketplace/${d.id}`} className="group">
       <Card className="overflow-hidden transition-shadow group-hover:shadow-md">
-        <div className="relative h-32 bg-gradient-to-br from-brand-100 via-brand-50 to-amber-50">
-          <div className="absolute right-3 top-3 flex items-center gap-1">
+        <div className="relative h-32 overflow-hidden bg-gradient-to-br from-brand-500/20 via-zinc-900 to-gold-500/10">
+          <div className="absolute inset-0 grid-floor opacity-30" />
+          <div className="absolute right-3 top-3 z-10 flex items-center gap-1">
             <Badge variant={aiBadgeVariant(d.aiScore)}>AI {d.aiScore}</Badge>
             {d.syariahCompliant && <Badge variant="success">Syariah</Badge>}
           </div>
-          <div className="absolute bottom-3 left-4 font-display text-xl font-semibold text-zinc-900">
+          <div className="absolute bottom-3 left-4 z-10 font-display text-xl font-semibold text-white">
             {d.name}
           </div>
         </div>
         <CardContent className="p-4">
-          <div className="flex items-center justify-between text-xs text-zinc-500">
+          <div className="flex items-center justify-between text-xs text-zinc-400">
             <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {d.location}</span>
             <span>{sectorLabel[d.sector] ?? d.sector}</span>
           </div>
           <div className="mt-3">
-            <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
-              <div className="h-full rounded-full bg-brand-700" style={{ width: `${pct}%` }} />
+            <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-800">
+              <div className="h-full rounded-full bg-brand-500" style={{ width: `${pct}%` }} />
             </div>
             <div className="mt-2 flex items-center justify-between text-xs">
-              <span className="font-medium text-zinc-900">{formatIDRCompact(d.raisedIDR)} <span className="text-zinc-500">/ {formatIDRCompact(d.fundingTargetIDR)}</span></span>
-              <span className="text-zinc-500">{pct}%</span>
+              <span className="font-medium text-white">{formatIDRCompact(d.raisedIDR)} <span className="text-zinc-400">/ {formatIDRCompact(d.fundingTargetIDR)}</span></span>
+              <span className="text-zinc-400">{pct}%</span>
             </div>
-            <div className="mt-1 text-xs text-zinc-500">{d.daysLeft} hari lagi · Bagi hasil ekuitas</div>
+            <div className="mt-1 text-xs text-zinc-400">{d.daysLeft} hari lagi · Bagi hasil ekuitas</div>
           </div>
         </CardContent>
       </Card>

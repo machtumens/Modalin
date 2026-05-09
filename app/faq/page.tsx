@@ -30,14 +30,14 @@ const faqs = [
 export default function FAQPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-      <h1 className="font-display text-4xl font-bold">Pertanyaan Umum</h1>
-      <div className="mt-8 space-y-6">
+      <h1 className="font-display text-4xl font-bold text-white">Pertanyaan Umum</h1>
+      <div className="mt-8 space-y-4">
         {faqs.map((f) => (
-          <details key={f.q} className="group rounded-xl border border-zinc-200 bg-white p-5 [&_summary::-webkit-details-marker]:hidden">
-            <summary className="cursor-pointer list-none text-base font-semibold text-zinc-900 group-open:text-brand-700">
+          <details key={f.q} className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 backdrop-blur transition-colors hover:border-brand-400/40 [&_summary::-webkit-details-marker]:hidden">
+            <summary className="cursor-pointer list-none text-base font-semibold text-zinc-100 group-open:text-brand-300">
               {f.q}
             </summary>
-            <p className="mt-3 text-sm text-zinc-600 leading-relaxed">{f.a}</p>
+            <p className="mt-3 text-sm leading-relaxed text-zinc-400">{f.a}</p>
           </details>
         ))}
       </div>

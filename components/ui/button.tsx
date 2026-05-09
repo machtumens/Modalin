@@ -4,17 +4,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-brand-700 text-white hover:bg-brand-800",
-        secondary: "bg-zinc-100 text-zinc-900 hover:bg-zinc-200",
-        outline: "border border-zinc-300 bg-white hover:bg-zinc-50",
-        ghost: "hover:bg-zinc-100",
-        accent: "bg-gold-500 text-zinc-900 hover:bg-gold-600 hover:text-white",
-        destructive: "bg-red-600 text-white hover:bg-red-700",
-        link: "text-brand-700 underline-offset-4 hover:underline",
+        default: "bg-brand-500 text-zinc-950 hover:bg-brand-400 shadow-[0_0_30px_-8px_rgba(45,212,191,0.5)]",
+        secondary: "bg-zinc-800 text-zinc-100 hover:bg-zinc-700",
+        outline: "border border-zinc-700 bg-zinc-900/40 text-zinc-100 hover:border-brand-400 hover:bg-zinc-900/60 hover:text-brand-300",
+        ghost: "text-zinc-300 hover:bg-zinc-800 hover:text-white",
+        accent: "bg-gold-500 text-zinc-950 hover:bg-gold-400",
+        destructive: "bg-red-600 text-white hover:bg-red-500",
+        link: "text-brand-400 underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2",

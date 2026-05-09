@@ -29,9 +29,9 @@ export function FilterRail() {
   }
 
   return (
-    <aside className={`space-y-6 rounded-xl border border-zinc-200 bg-white p-5 ${pending ? "opacity-70" : ""}`}>
+    <aside className={`space-y-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 backdrop-blur ${pending ? "opacity-70" : ""}`}>
       <div>
-        <h3 className="text-sm font-semibold text-zinc-900">Sektor</h3>
+        <h3 className="text-sm font-semibold text-white">Sektor</h3>
         <div className="mt-3 flex flex-wrap gap-2">
           {sectorOptions.map((o) => {
             const on = sectors.includes(o.value);
@@ -40,7 +40,7 @@ export function FilterRail() {
                 key={o.value}
                 type="button"
                 onClick={() => toggleSector(o.value)}
-                className={`rounded-full border px-3 py-1 text-xs transition-colors ${on ? "border-brand-700 bg-brand-700 text-white" : "border-zinc-300 bg-white text-zinc-700 hover:border-brand-700"}`}
+                className={`rounded-full border px-3 py-1 text-xs transition-colors ${on ? "border-brand-500 bg-brand-500 text-zinc-950" : "border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-brand-400 hover:text-brand-300"}`}
               >
                 {o.label}
               </button>
@@ -50,7 +50,7 @@ export function FilterRail() {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-zinc-900">Min AI Score: <span className="text-brand-700">{minScore}</span></h3>
+        <h3 className="text-sm font-semibold text-white">Min AI Score: <span className="text-brand-400">{minScore}</span></h3>
         <input
           type="range"
           min={0}
@@ -58,28 +58,28 @@ export function FilterRail() {
           step={5}
           value={minScore}
           onChange={(e) => update({ minScore: e.target.value })}
-          className="mt-3 w-full accent-brand-700"
+          className="mt-3 w-full accent-brand-500"
         />
       </div>
 
       <div>
         <label className="flex cursor-pointer items-center justify-between gap-3">
-          <span className="text-sm font-semibold text-zinc-900">Hanya Syariah</span>
+          <span className="text-sm font-semibold text-white">Hanya Syariah</span>
           <input
             type="checkbox"
             checked={syariah}
             onChange={(e) => update({ syariah: e.target.checked ? "1" : null })}
-            className="h-4 w-4 accent-brand-700"
+            className="h-4 w-4 accent-brand-500"
           />
         </label>
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-zinc-900">Urutkan</h3>
+        <h3 className="text-sm font-semibold text-white">Urutkan</h3>
         <select
           value={sort}
           onChange={(e) => update({ sort: e.target.value })}
-          className="mt-2 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm"
+          className="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-200"
         >
           <option value="score">AI Score tertinggi</option>
           <option value="progress">Progress pendanaan</option>
@@ -91,7 +91,7 @@ export function FilterRail() {
       <button
         type="button"
         onClick={() => start(() => router.replace(path))}
-        className="w-full rounded-md border border-zinc-200 px-3 py-2 text-xs text-zinc-600 hover:bg-zinc-50"
+        className="w-full rounded-md border border-zinc-800 px-3 py-2 text-xs text-zinc-400 hover:bg-zinc-800/60"
       >
         Reset filter
       </button>

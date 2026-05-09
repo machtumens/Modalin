@@ -49,21 +49,21 @@ export function LiveActivityFeed({ initial }: { initial: Item[] }) {
 
   if (!items.length) {
     return (
-      <div className="rounded-xl border border-zinc-200 bg-white p-8 text-center text-sm text-zinc-500">
+      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center text-sm text-zinc-400 backdrop-blur">
         Belum ada aktivitas. Investasikan ke UMKM untuk melihat transaksi mereka di sini.
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white">
-      <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-3 text-xs">
-        <span className="font-semibold text-zinc-900">Live Activity (simulated)</span>
-        <span className="flex items-center gap-2 text-zinc-500">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" /> Streaming
+    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur">
+      <div className="flex items-center justify-between border-b border-zinc-800/60 px-5 py-3 text-xs">
+        <span className="font-semibold text-white">Live Activity (simulated)</span>
+        <span className="flex items-center gap-2 text-zinc-400">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-400" /> Streaming
         </span>
       </div>
-      <ul className="max-h-96 divide-y divide-zinc-100 overflow-y-auto">
+      <ul className="max-h-96 divide-y divide-zinc-800/60 overflow-y-auto">
         <AnimatePresence initial={false}>
           {items.map((t) => (
             <motion.li
@@ -75,17 +75,17 @@ export function LiveActivityFeed({ initial }: { initial: Item[] }) {
               transition={{ duration: 0.25 }}
               className="flex items-center gap-3 px-5 py-3 text-sm"
             >
-              <div className={`flex h-8 w-8 items-center justify-center rounded-full ${t.kind === "INFLOW" ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-600"}`}>
+              <div className={`flex h-8 w-8 items-center justify-center rounded-full ring-1 ring-inset ${t.kind === "INFLOW" ? "bg-brand-500/15 text-brand-300 ring-brand-400/30" : "bg-red-500/15 text-red-300 ring-red-400/30"}`}>
                 {t.kind === "INFLOW" ? <ArrowDownRight className="h-4 w-4" /> : <ArrowUpRight className="h-4 w-4" />}
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="truncate font-medium text-zinc-900">{t.umkmName}</span>
-                  <span className={`font-semibold ${t.kind === "INFLOW" ? "text-emerald-700" : "text-red-600"}`}>
+                  <span className="truncate font-medium text-white">{t.umkmName}</span>
+                  <span className={`font-semibold ${t.kind === "INFLOW" ? "text-brand-300" : "text-red-300"}`}>
                     {t.kind === "INFLOW" ? "+" : "-"}{formatIDRCompact(t.amountIDR)}
                   </span>
                 </div>
-                <div className="mt-0.5 flex items-center justify-between gap-3 text-xs text-zinc-500">
+                <div className="mt-0.5 flex items-center justify-between gap-3 text-xs text-zinc-400">
                   <span className="truncate">{t.counterparty} · {t.channel}</span>
                   <time>{new Date(t.ts).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })}</time>
                 </div>

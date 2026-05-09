@@ -15,12 +15,16 @@ const benefits = [
 export default function ForInvestorPage() {
   return (
     <div>
-      <section className="bg-gradient-to-br from-brand-50 to-white">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-          <h1 className="max-w-3xl font-display text-4xl font-bold sm:text-5xl">
-            Investasi langsung ke UMKM Indonesia, mulai Rp100.000.
+      <section className="relative overflow-hidden border-b border-zinc-800/60">
+        <div className="aurora-blob b1 absolute -top-1/4 -left-10 h-[500px] w-[500px]" style={{ background: "radial-gradient(circle, #14b8a6 0%, transparent 60%)" }} />
+        <div className="aurora-blob b2 absolute -top-10 right-0 h-[400px] w-[400px]" style={{ background: "radial-gradient(circle, #f59e0b 0%, transparent 60%)" }} />
+        <div className="absolute inset-0 grid-floor opacity-50" />
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <h1 className="max-w-3xl font-display text-4xl font-bold text-white sm:text-5xl">
+            Investasi langsung ke UMKM Indonesia, mulai{" "}
+            <span className="shimmer-text">Rp100.000</span>.
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-zinc-600">
+          <p className="mt-4 max-w-2xl text-lg text-zinc-400">
             Modalin memberi investor ritel akses ekuitas ke UMKM early-growth (1–3 tahun, omzet Rp30–300 jt/bulan) — segmen yang ditolak bank dan tidak dilayani ECF eksisting.
           </p>
           <div className="mt-8 flex gap-3">
@@ -34,12 +38,12 @@ export default function ForInvestorPage() {
           {benefits.map((b) => (
             <Card key={b.title}>
               <CardHeader>
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-brand-400/30 bg-brand-400/10 text-brand-300">
                   <b.icon className="h-5 w-5" />
                 </div>
                 <CardTitle className="mt-3">{b.title}</CardTitle>
               </CardHeader>
-              <CardContent className="text-sm text-zinc-600">{b.body}</CardContent>
+              <CardContent className="text-sm text-zinc-400">{b.body}</CardContent>
             </Card>
           ))}
         </div>

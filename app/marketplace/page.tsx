@@ -53,14 +53,14 @@ export default async function MarketplacePage({
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold">Marketplace UMKM</h1>
-        <p className="mt-2 text-zinc-600">{total} UMKM tersedia untuk pendanaan ekuitas.</p>
+        <h1 className="font-display text-3xl font-bold text-white">Marketplace UMKM</h1>
+        <p className="mt-2 text-zinc-400">{total} UMKM tersedia untuk pendanaan ekuitas.</p>
       </div>
       <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
         <FilterRail />
         <div>
           {cards.length === 0 ? (
-            <div className="rounded-xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500">
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-10 text-center text-sm text-zinc-400 backdrop-blur">
               Tidak ada UMKM yang cocok dengan filter Anda.
             </div>
           ) : (
@@ -79,7 +79,7 @@ export default async function MarketplacePage({
                   <a
                     key={p}
                     href={`/marketplace?${params.toString()}`}
-                    className={`rounded-md border px-3 py-1.5 text-sm ${p === page ? "border-brand-700 bg-brand-700 text-white" : "border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-50"}`}
+                    className={`rounded-md border px-3 py-1.5 text-sm ${p === page ? "border-brand-500 bg-brand-500 text-zinc-950" : "border-zinc-800 bg-zinc-900/50 text-zinc-300 hover:bg-zinc-800/60"}`}
                   >
                     {p}
                   </a>

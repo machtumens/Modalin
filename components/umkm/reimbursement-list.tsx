@@ -33,13 +33,13 @@ export function ReimbursementList({ umkmId, seedItems }: { umkmId: string; seedI
   );
 
   if (merged.length === 0) {
-    return <div className="py-10 text-center text-sm text-zinc-500">Belum ada pengajuan.</div>;
+    return <div className="py-10 text-center text-sm text-zinc-400">Belum ada pengajuan.</div>;
   }
 
   return (
     <table className="w-full text-sm">
       <thead>
-        <tr className="border-b border-zinc-100 text-left text-xs text-zinc-500">
+        <tr className="border-b border-zinc-800/60 text-left text-xs text-zinc-400">
           <th className="pb-2">Tanggal</th>
           <th className="pb-2">Kategori</th>
           <th className="pb-2 text-right">Jumlah</th>
@@ -51,11 +51,11 @@ export function ReimbursementList({ umkmId, seedItems }: { umkmId: string; seedI
         {merged.map((r) => {
           const b = statusBadge[r.status] ?? statusBadge.PENDING_ADMIN_REVIEW;
           return (
-            <tr key={r.id} className="border-b border-zinc-100 last:border-0">
-              <td className="py-3 text-zinc-600">{new Date(r.createdAt).toLocaleDateString("id-ID")}</td>
-              <td className="py-3">{CATEGORY_LABEL[r.category as ReimbursementCategory] ?? r.category}</td>
-              <td className="py-3 text-right font-medium">{formatIDR(r.amountIDR)}</td>
-              <td className="py-3 text-right text-xs">{r.deltaPct >= 0 ? "+" : ""}{r.deltaPct}%</td>
+            <tr key={r.id} className="border-b border-zinc-800/60 last:border-0">
+              <td className="py-3 text-zinc-400">{new Date(r.createdAt).toLocaleDateString("id-ID")}</td>
+              <td className="py-3 text-zinc-200">{CATEGORY_LABEL[r.category as ReimbursementCategory] ?? r.category}</td>
+              <td className="py-3 text-right font-medium text-white">{formatIDR(r.amountIDR)}</td>
+              <td className="py-3 text-right text-xs text-zinc-300">{r.deltaPct >= 0 ? "+" : ""}{r.deltaPct}%</td>
               <td className="py-3"><Badge variant={b.variant}>{b.label}</Badge></td>
             </tr>
           );

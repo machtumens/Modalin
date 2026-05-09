@@ -48,13 +48,13 @@ export function PortfolioTable({ seedHoldings }: { seedHoldings: Seed[] }) {
       </CardHeader>
       <CardContent>
         {merged.length === 0 ? (
-          <div className="py-12 text-center text-sm text-zinc-500">
-            Belum ada investasi. <Link href="/marketplace" className="text-brand-700 underline">Mulai dari Marketplace</Link>.
+          <div className="py-12 text-center text-sm text-zinc-400">
+            Belum ada investasi. <Link href="/marketplace" className="text-brand-400 underline">Mulai dari Marketplace</Link>.
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-100 text-left text-xs text-zinc-500">
+              <tr className="border-b border-zinc-800/60 text-left text-xs text-zinc-400">
                 <th className="pb-2">UMKM</th>
                 <th className="pb-2">Sektor</th>
                 <th className="pb-2 text-right">Total Investasi</th>
@@ -68,18 +68,18 @@ export function PortfolioTable({ seedHoldings }: { seedHoldings: Seed[] }) {
               {merged.map((h) => {
                 const access = h.equityPct >= 5;
                 return (
-                  <tr key={h.umkmId} className="border-b border-zinc-100 last:border-0">
-                    <td className="py-3 font-medium">
+                  <tr key={h.umkmId} className="border-b border-zinc-800/60 last:border-0">
+                    <td className="py-3 font-medium text-white">
                       {h.umkmName}
-                      {access && <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] text-amber-800">Komunitas</span>}
+                      {access && <span className="ml-2 rounded-full bg-gold-500/15 px-2 py-0.5 text-[10px] text-gold-300 ring-1 ring-inset ring-gold-400/30">Komunitas</span>}
                     </td>
-                    <td className="py-3 text-zinc-600">{sectorLabel[h.sector] ?? h.sector}</td>
-                    <td className="py-3 text-right">{formatIDR(h.amountIDR)}</td>
-                    <td className="py-3 text-right">{h.equityPct.toFixed(2)}%</td>
-                    <td className="py-3 text-right text-zinc-600">{h.count}×</td>
-                    <td className="py-3 text-right">{h.aiScore || "—"}</td>
+                    <td className="py-3 text-zinc-400">{sectorLabel[h.sector] ?? h.sector}</td>
+                    <td className="py-3 text-right text-zinc-200">{formatIDR(h.amountIDR)}</td>
+                    <td className="py-3 text-right text-zinc-200">{h.equityPct.toFixed(2)}%</td>
+                    <td className="py-3 text-right text-zinc-400">{h.count}×</td>
+                    <td className="py-3 text-right text-zinc-200">{h.aiScore || "—"}</td>
                     <td className="py-3 text-right">
-                      <Link href={`/investor/portfolio/${h.umkmId}`} className="text-xs text-brand-700 hover:underline">Detail →</Link>
+                      <Link href={`/investor/portfolio/${h.umkmId}`} className="text-xs text-brand-400 hover:text-brand-300">Detail →</Link>
                     </td>
                   </tr>
                 );
@@ -87,8 +87,8 @@ export function PortfolioTable({ seedHoldings }: { seedHoldings: Seed[] }) {
             </tbody>
           </table>
         )}
-        <div className="mt-6 flex justify-end gap-6 border-t border-zinc-100 pt-4 text-xs text-zinc-500">
-          <span>Total invested: <span className="font-semibold text-zinc-900">{formatIDRCompact(total)}</span></span>
+        <div className="mt-6 flex justify-end gap-6 border-t border-zinc-800/60 pt-4 text-xs text-zinc-400">
+          <span>Total invested: <span className="font-semibold text-white">{formatIDRCompact(total)}</span></span>
         </div>
       </CardContent>
     </Card>

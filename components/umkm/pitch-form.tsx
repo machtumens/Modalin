@@ -30,7 +30,7 @@ export function PitchForm({
   }
 
   return (
-    <div className="mt-6 space-y-5 rounded-xl border border-zinc-200 bg-white p-6">
+    <div className="mt-6 space-y-5 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur">
       <div>
         <Label htmlFor="story">Cerita bisnis</Label>
         <textarea
@@ -40,15 +40,15 @@ export function PitchForm({
           minLength={40}
           maxLength={5000}
           required
-          className="mt-1 h-40 w-full resize-y rounded-md border border-zinc-300 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-700"
+          className="mt-1 h-40 w-full resize-y rounded-md border border-zinc-700 bg-zinc-900 p-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
-        <div className="mt-1 text-xs text-zinc-500">{story.length} karakter</div>
+        <div className="mt-1 text-xs text-zinc-400">{story.length} karakter</div>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label htmlFor="target">Target pendanaan (IDR)</Label>
           <Input id="target" type="number" min={50_000_000} max={500_000_000} step={1_000_000} value={target} onChange={(e) => setTarget(Number(e.target.value))} />
-          <div className="mt-1 text-xs text-zinc-500">{formatIDR(target)}</div>
+          <div className="mt-1 text-xs text-zinc-400">{formatIDR(target)}</div>
         </div>
         <div>
           <Label htmlFor="equity">Equity offered (%)</Label>
@@ -60,14 +60,14 @@ export function PitchForm({
         </div>
         <div>
           <Label>Valuasi pre-money</Label>
-          <div className="mt-1 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm">{formatIDR(Math.round(valuation))}</div>
+          <div className="mt-1 rounded-md border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-200">{formatIDR(Math.round(valuation))}</div>
         </div>
       </div>
-      <label className="flex items-center gap-3 rounded-md border border-zinc-200 bg-zinc-50 p-3 text-sm">
-        <input type="checkbox" checked={syariah} onChange={(e) => setSyariah(e.target.checked)} className="h-4 w-4 accent-brand-700" />
+      <label className="flex items-center gap-3 rounded-md border border-zinc-800 bg-zinc-900/40 p-3 text-sm text-zinc-200">
+        <input type="checkbox" checked={syariah} onChange={(e) => setSyariah(e.target.checked)} className="h-4 w-4 accent-brand-500" />
         <span>Bisnis ini patuh prinsip syariah.</span>
       </label>
-      {msg && <p className="text-sm text-emerald-700">{msg}</p>}
+      {msg && <p className="text-sm text-brand-300">{msg}</p>}
       <Button onClick={submit}>Submit Pitch ke Review</Button>
     </div>
   );
