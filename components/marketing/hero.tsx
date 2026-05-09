@@ -3,6 +3,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { PaperShaderBackground } from "@/components/ui/paper-shader-background";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -16,9 +17,9 @@ export function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-amber-50" aria-hidden />
-      <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24">
+    <section className="relative overflow-hidden min-h-[88vh] flex items-center">
+      <PaperShaderBackground intensity={0.55} />
+      <div className="relative mx-auto max-w-7xl w-full px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <motion.div initial="hidden" animate="show" variants={stagger}>
             <motion.div variants={child}>

@@ -11,11 +11,23 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: {
-    default: "Modalin — Modal Tumbuh, Akses Terbuka",
+    default: "Modalin — Invest. Grow. Impact.",
     template: "%s · Modalin",
   },
   description:
     "Equity crowdfunding pertama Indonesia yang terintegrasi dengan rekening bank UMKM. Investasi mulai Rp100.000.",
+  icons: {
+    icon: [
+      { url: "/modalin-logo.png", type: "image/png" },
+    ],
+    shortcut: "/modalin-logo.png",
+    apple: "/modalin-logo.png",
+  },
+  openGraph: {
+    title: "Modalin — Invest. Grow. Impact.",
+    description: "Equity crowdfunding pertama Indonesia yang terintegrasi dengan rekening bank UMKM.",
+    images: ["/modalin-logo.png"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

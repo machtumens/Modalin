@@ -1,3 +1,6 @@
+"use client";
+import { useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { LogoMark } from "./logo-mark";
 
@@ -12,9 +15,23 @@ export function Logo({
 }) {
   const markSize = size === "lg" ? 56 : size === "md" ? 40 : 32;
   const wordCls = size === "lg" ? "text-4xl" : size === "md" ? "text-2xl" : "text-xl";
+  const [imgFailed, setImgFailed] = useState(false);
+
   return (
     <div className={cn("flex items-center gap-2.5", className)}>
-      <LogoMark size={markSize} />
+      {imgFailed ? (
+        <LogoMark size={markSize} />
+      ) : (
+        <Image
+          src="/modalin-logo.png"
+          alt="Modalin"
+          width={markSize}
+          height={markSize}
+          priority={size !== "sm"}
+          className="object-contain"
+          onError={() => setImgFailed(true)}
+        />
+      )}
       <div className="flex flex-col leading-none">
         <span className={cn("font-display font-bold tracking-tight text-zinc-900", wordCls)}>
           modalin
