@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+import { getRole } from "@/lib/role";
 
 export default async function PostSignin() {
-  const session = await auth();
-  if (!session?.user) redirect("/signin");
-  const role = session.user.role.toLowerCase();
-  redirect(`/${role}/dashboard`);
+  const role = await getRole();
+  if (!role) redirect("/signin");
+  redirect(`/${role.toLowerCase()}/dashboard`);
 }

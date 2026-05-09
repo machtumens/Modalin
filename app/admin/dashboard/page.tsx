@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { TxnKind } from "@/lib/enums";
-import { requireRole } from "@/lib/rbac";
-import { prisma } from "@/lib/prisma";
+import { requireRole } from "@/lib/role";
+import { platformMetrics, reimbursements, umkms } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatIDR, formatIDRCompact } from "@/lib/money";
 
@@ -9,42 +8,25 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
   await requireRole("ADMIN");
-
-  const since30 = new Date(Date.now() - 30 * 86_400_000);
-
-  const [aum, umkmFundedRaw, investors, gmvAgg, avgScoreAgg, pendingPitch, pendingPayouts] = await Promise.all([
-    prisma.investment.aggregate({ _sum: { amountIDR: true } }),
-    prisma.investment.findMany({ select: { umkmId: true }, distinct: ["umkmId"] }),
-    prisma.user.count({ where: { role: "INVESTOR" } }),
-    prisma.transaction.aggregate({
-      where: { kind: TxnKind.INFLOW, ts: { gte: since30 } },
-      _sum: { amountIDR: true },
-    }),
-    prisma.uMKM.aggregate({ _avg: { aiScore: true } }),
-    prisma.pitch.count({ where: { status: "PENDING_REVIEW" } }),
-    prisma.reimbursement.count({ where: { status: "PENDING_ADMIN_REVIEW" } }),
-  ]);
-
-  const totalAum = Number(aum._sum.amountIDR ?? 0);
-  const successFee = Math.round(totalAum * 0.05);
+  const m = platformMetrics();
+  const pendingPayouts = reimbursements.filter((r) => r.status === "PENDING_ADMIN_REVIEW" || r.status === "BLOCKED_PRICE_CHECK").length;
+  const pendingPitch = umkms.length === 0 ? 0 : 0; // all approved in seed; demo
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <h1 className="font-display text-3xl font-bold">Admin Console</h1>
-      <p className="mt-1 text-sm text-zinc-500">Metrik platform real-time.</p>
+      <p className="mt-1 text-sm text-zinc-500">Metrik platform demo (data seed).</p>
       <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Stat label="Total AUM" value={formatIDR(totalAum)} />
-        <Stat label="UMKM Terdanai" value={`${umkmFundedRaw.length}`} />
-        <Stat label="Investor Ritel" value={`${investors}`} />
-        <Stat label="GMV BPR (30 hari)" value={formatIDRCompact(Number(gmvAgg._sum.amountIDR ?? 0))} />
-        <Stat label="Avg AI Score" value={`${Math.round(avgScoreAgg._avg.aiScore ?? 0)}`} />
-        <Stat label="Success Fee Akrual" value={formatIDR(successFee)} />
+        <Stat label="Total AUM" value={formatIDR(m.totalAum)} />
+        <Stat label="UMKM Terdanai" value={`${m.umkmFunded}`} />
+        <Stat label="Investor Ritel" value={`${m.investorCount}`} />
+        <Stat label="GMV BPR (30 hari)" value={formatIDRCompact(m.gmv30)} />
+        <Stat label="Avg AI Score" value={`${m.avgScore}`} />
+        <Stat label="Success Fee Akrual" value={formatIDR(m.successFee)} />
       </section>
       <section className="mt-8 grid gap-4 sm:grid-cols-2">
         <Card>
-          <CardHeader>
-            <CardTitle>Curation Queue</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle>Curation Queue</CardTitle></CardHeader>
           <CardContent>
             <div className="font-display text-3xl font-bold">{pendingPitch}</div>
             <div className="text-xs text-zinc-500">pitch menunggu review</div>
@@ -52,9 +34,7 @@ export default async function AdminDashboard() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader>
-            <CardTitle>Payout Queue</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle>Payout Queue</CardTitle></CardHeader>
           <CardContent>
             <div className="font-display text-3xl font-bold">{pendingPayouts}</div>
             <div className="text-xs text-zinc-500">reimbursement menunggu approval</div>

@@ -1,62 +1,78 @@
-# Modalin — Dynamic Prototype
+# Modalin — Static Prototype
 
-Indonesia's first equity-crowdfunding platform integrated with UMKM digital banking. This repo is a clickable, data-backed prototype — not a production system.
+Indonesia's first equity-crowdfunding platform integrated with UMKM digital banking. **Clickable demo prototype, not a real platform.**
+
+No database. No real auth. No payments. All data is hardcoded in `data/seed.ts` and user actions persist to browser localStorage via Zustand.
 
 ## Stack
 
-Next.js 15 (App Router) · TypeScript · Tailwind v4 · shadcn-style UI · Framer Motion · Tremor · TanStack Query/Table · Zustand · Auth.js v5 · Prisma + Postgres (Supabase) · Supabase Realtime · next-intl · react-leaflet.
+Next.js 15 (App Router) · TypeScript · Tailwind v4 · Framer Motion · Tremor · Zustand · react-leaflet · shadcn-style UI primitives.
 
-## Build phases (one per module)
+Zero external services. Vercel-deployable as-is.
 
-| Module | Doc | Prompt | Scope |
-|--------|-----|--------|-------|
-| 1 | `docs/01-foundation.md` | `prompts/01-foundation.prompt.md` | Init, Auth, DB, design system, layout |
-| 2 | `docs/02-marketing.md` | `prompts/02-marketing.prompt.md` | Public landing + sub-pages + BPR map |
-| 3 | `docs/03-marketplace.md` | `prompts/03-marketplace.prompt.md` | ECF listing + detail + AI score + invest |
-| 4 | `docs/04-investor-dashboard.md` | `prompts/04-investor-dashboard.prompt.md` | Portfolio + live txn + Index Fund + Community |
-| 5 | `docs/05-umkm-and-admin.md` | `prompts/05-umkm-and-admin.prompt.md` | UMKM bank + reimbursement + admin |
-
-See [`docs/00-PLAN.md`](docs/00-PLAN.md) for full architecture and data model.
-
-## Setup
+## Run
 
 ```bash
 pnpm install
-cp .env.example .env
-# fill DATABASE_URL, DIRECT_URL, AUTH_SECRET, NEXT_PUBLIC_SUPABASE_*
-pnpm db:push
-pnpm db:seed
 pnpm dev
 ```
 
 Open http://localhost:3000.
 
-## Demo accounts
+## Demo personas
 
-Password for all: **`Demo123!`**
+Visit `/signin` and pick:
 
-| Email | Role |
-|-------|------|
-| `admin@modalin.id` | Admin |
-| `andi@inv.id` | Investor |
-| `siti@inv.id` | Investor |
-| `rahmat@inv.id` | Investor |
-| `andi.kopitani@umkm.id` | UMKM founder (Kopi Tani Toraja) |
-| `siti.sari@umkm.id` | UMKM founder (Sari Kemasan Nusantara) |
-| ... 10 more UMKM founders | UMKM |
+| Role | Persona | Sees |
+|------|---------|------|
+| INVESTOR | Andi Investor (`u-andi-inv`) | Dashboard, portfolio, live activity, Index Fund, Community access for UMKM with ≥5% holding |
+| UMKM | Andi Pratama (`Kopi Tani Toraja`, `u-umkm-1`) | Modalin Bank Account view, transactions, AI score, edit pitch, ajukan reimbursement |
+| ADMIN | Admin Modalin (`u-admin`) | Curation queue, AI score override (demo no-op), payout approval queue, platform metrics |
 
-## Scripts
+No password. Cookie-based role switch. Click "Keluar" in header to reset.
 
-```bash
-pnpm dev          # next dev
-pnpm build        # next build
-pnpm db:generate  # prisma generate
-pnpm db:push      # push schema to DB (dev)
-pnpm db:migrate   # create migration
-pnpm db:seed      # seed demo data
-pnpm db:reset     # nuke + reseed
+## Demo path
+
+1. `/` landing → `/marketplace` → click any UMKM
+2. Slide ticket to Rp200k → konfirmasi → confetti success
+3. `/investor/dashboard` shows new investment in portfolio + live activity feed (synthetic transactions every 8s)
+4. `/investor/index-fund` slide to Rp10jt + Balanced strategy → invest → 15 UMKM auto-allocated
+5. Switch to UMKM persona → `/umkm/reimbursement/new` → category Laptop, jumlah Rp7,5jt → AI verdict OK → DISBURSED
+6. Try Marketing digital Rp30jt → AI verdict OVER → BLOCKED_PRICE_CHECK
+7. Switch to Admin → `/admin/payouts` → see blocked entry; `/admin/umkm` → all approved seed pitches
+
+## Project structure
+
+```
+app/             # All routes (marketing, signin, marketplace, role dashboards)
+components/      # UI primitives + layout + marketing sections + per-domain components
+data/seed.ts     # Hardcoded UMKM, transactions, investments, posts (deterministic PRNG)
+lib/
+  data.ts        # Server-side query helpers reading seed
+  store.ts       # Zustand store persisted to localStorage (invest + reimburse mutations)
+  role.ts        # Cookie-based fake auth (no password)
+  enums.ts       # String-const enum types (Role / Sector / TxnKind / etc)
+  ai/scorer.ts   # Rule-based AI score (SLIK + e-com + behavior + revenue/age + sector)
+  ai/price-validator.ts  # Reimbursement price validation vs hardcoded ref table
+  money.ts       # IDR formatters
+content/legal/   # Markdown for /legal/[slug]
+docs/            # Original 5-module plan + architecture
+prompts/         # Build prompts (historical)
 ```
 
-## Status
+## What's NOT here (intentional)
 
-Module 1 complete. Modules 2–5 pending — run their prompts in `prompts/` sequentially.
+- No Prisma, SQLite, Postgres
+- No NextAuth / Auth.js
+- No `/api/*` routes (all data lives client-/server-side via direct seed import)
+- No cron job (live feed is client setInterval)
+- No middleware
+- No i18n routing (Indonesian only)
+
+## Deploy
+
+```bash
+vercel --prod
+```
+
+Zero env vars required. Build is pure static + RSC.

@@ -1,10 +1,8 @@
-import type { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { listUMKMs, getPitch } from "@/lib/data";
 import { FilterRail } from "@/components/marketplace/filter-rail";
 import { UMKMCard } from "@/components/marketplace/umkm-card";
 
 export const metadata = { title: "Marketplace" };
-export const dynamic = "force-dynamic";
 
 const PAGE_SIZE = 12;
 
@@ -14,44 +12,27 @@ export default async function MarketplacePage({
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
   const sp = await searchParams;
-  const sectorList = (sp.sector ?? "").split(",").filter(Boolean);
+  const sectors = (sp.sector ?? "").split(",").filter(Boolean);
   const minScore = Number(sp.minScore ?? 0);
   const syariah = sp.syariah === "1";
-  const sort = sp.sort ?? "score";
+  const sort = (sp.sort ?? "score") as "score" | "newest" | "deadline" | "progress";
   const page = Math.max(1, Number(sp.page ?? 1));
 
-  const where: Prisma.UMKMWhereInput = {
-    pitch: { is: { status: "APPROVED" } },
-    aiScore: { gte: minScore },
-  };
-  if (sectorList.length) where.sector = { in: sectorList };
-  if (syariah) where.syariahCompliant = true;
-
-  const orderBy: Prisma.UMKMOrderByWithRelationInput =
-    sort === "newest"
-      ? { createdAt: "desc" }
-      : sort === "deadline"
-        ? { pitch: { deadline: "asc" } }
-        : sort === "progress"
-          ? { pitch: { raisedIDR: "desc" } }
-          : { aiScore: "desc" };
-
-  const [items, total] = await Promise.all([
-    prisma.uMKM.findMany({
-      where,
-      orderBy,
-      include: { pitch: true },
-      take: PAGE_SIZE,
-      skip: (page - 1) * PAGE_SIZE,
-    }),
-    prisma.uMKM.count({ where }),
-  ]);
+  const { items, total } = listUMKMs({
+    sectors,
+    minScore,
+    syariah,
+    sort,
+    page,
+    pageSize: PAGE_SIZE,
+  });
 
   const cards = items.map((u) => {
-    const target = Number(u.fundingTargetIDR);
-    const raised = u.pitch ? Number(u.pitch.raisedIDR) : 0;
-    const daysLeft = u.pitch
-      ? Math.max(0, Math.ceil((u.pitch.deadline.getTime() - Date.now()) / 86_400_000))
+    const pitch = getPitch(u.id);
+    const target = u.fundingTargetIDR;
+    const raised = pitch?.raisedIDR ?? 0;
+    const daysLeft = pitch
+      ? Math.max(0, Math.ceil((new Date(pitch.deadline).getTime() - Date.now()) / 86_400_000))
       : 0;
     return {
       id: u.id,

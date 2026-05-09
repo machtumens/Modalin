@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
 import { Logo } from "./logo";
 
-export async function Footer() {
-  const t = await getTranslations("Footer");
+export function Footer() {
   return (
     <footer className="border-t border-zinc-200 bg-zinc-50 mt-16">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -15,24 +13,24 @@ export async function Footer() {
               Modal tumbuh, akses terbuka.
             </p>
           </div>
-          <FooterCol title={t("product")} links={[
+          <FooterCol title="Produk" links={[
             { href: "/marketplace", label: "Marketplace" },
             { href: "/untuk-umkm", label: "Untuk UMKM" },
             { href: "/untuk-investor", label: "Untuk Investor" },
             { href: "/mitra-bpr", label: "Mitra BPR" },
           ]} />
-          <FooterCol title={t("company")} links={[
+          <FooterCol title="Perusahaan" links={[
             { href: "/tentang", label: "Tentang" },
             { href: "/faq", label: "FAQ" },
           ]} />
-          <FooterCol title={t("legal")} links={[
+          <FooterCol title="Legal" links={[
             { href: "/legal/tos", label: "Syarat Layanan" },
             { href: "/legal/privasi", label: "Privasi" },
             { href: "/legal/risiko", label: "Disclaimer Risiko" },
           ]} />
         </div>
         <div className="mt-10 border-t border-zinc-200 pt-6 text-xs text-zinc-500">
-          {t("disclaimer")}
+          Modalin adalah prototype demo. Bukan platform finansial yang berizin OJK saat ini.
         </div>
         <div className="mt-2 text-xs text-zinc-400">
           © {new Date().getFullYear()} Modalin. Hak cipta dilindungi.

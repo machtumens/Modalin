@@ -1,60 +1,55 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import { signIn, auth } from "@/auth";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { setRole, getRole } from "@/lib/role";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-export default async function SigninPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error?: string; callbackUrl?: string }>;
-}) {
-  const session = await auth();
-  if (session?.user) {
-    const role = session.user.role.toLowerCase();
-    redirect(`/${role}/dashboard`);
-  }
-  const sp = await searchParams;
+export const dynamic = "force-dynamic";
+
+const personas = [
+  { role: "INVESTOR" as const, id: "u-andi-inv", name: "Andi Investor", desc: "Browse marketplace, invest, lihat live transaksi UMKM, akses Modalin Community." },
+  { role: "UMKM" as const, id: "u-umkm-1", name: "Andi Pratama (Kopi Tani Toraja)", desc: "Modalin Bank Account, AI score, ajukan reimbursement, edit pitch." },
+  { role: "ADMIN" as const, id: "u-admin", name: "Admin Modalin", desc: "Curation queue, override AI score, approve payouts, platform metrics." },
+];
+
+export default async function SigninPage() {
+  const existing = await getRole();
+  if (existing) redirect(`/${existing.toLowerCase()}/dashboard`);
 
   return (
-    <div className="mx-auto flex min-h-[70vh] max-w-md items-center px-4">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle className="font-display text-2xl">Masuk ke Modalin</CardTitle>
-          <CardDescription>
-            Akun demo: <code>admin@modalin.id</code>, <code>andi@inv.id</code>, atau salah satu UMKM (mis. <code>andi.kopitani@umkm.id</code>). Sandi: <code>Demo123!</code>
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mb-8 text-center">
+        <h1 className="font-display text-3xl font-bold">Pilih persona demo</h1>
+        <p className="mt-2 text-sm text-zinc-500">
+          Prototype klikable. Tidak ada password — pilih peran untuk mulai eksplorasi.
+        </p>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-3">
+        {personas.map((p) => (
           <form
-            action={async (formData) => {
+            key={p.role}
+            action={async () => {
               "use server";
-              const email = String(formData.get("email") ?? "");
-              const password = String(formData.get("password") ?? "");
-              await signIn("credentials", {
-                email,
-                password,
-                redirectTo: "/post-signin",
-              });
+              await setRole(p.role, p.id);
+              redirect(`/${p.role.toLowerCase()}/dashboard`);
             }}
-            className="space-y-4"
           >
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" required defaultValue="andi@inv.id" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Kata Sandi</Label>
-              <Input id="password" name="password" type="password" required defaultValue="Demo123!" />
-            </div>
-            {sp.error && (
-              <p className="text-sm text-red-600">Email atau sandi salah.</p>
-            )}
-            <Button type="submit" className="w-full">Masuk</Button>
+            <Card className="h-full transition-shadow hover:shadow-md">
+              <CardHeader>
+                <div className="text-xs font-semibold uppercase tracking-wide text-brand-700">{p.role}</div>
+                <CardTitle className="mt-1 text-lg">{p.name}</CardTitle>
+                <CardDescription className="mt-2">{p.desc}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button type="submit" className="w-full">Masuk sebagai {p.role}</Button>
+              </CardContent>
+            </Card>
           </form>
-        </CardContent>
-      </Card>
+        ))}
+      </div>
+      <div className="mt-8 text-center text-xs text-zinc-500">
+        <Link href="/" className="hover:text-brand-700">← Kembali ke beranda</Link>
+      </div>
     </div>
   );
 }

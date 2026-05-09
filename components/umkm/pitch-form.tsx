@@ -1,10 +1,8 @@
 "use client";
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { submitPitch } from "@/actions/pitch";
 import { formatIDR } from "@/lib/money";
 
 export function PitchForm({
@@ -23,31 +21,12 @@ export function PitchForm({
   const [equity, setEquity] = useState(defaults.equityOfferedPct);
   const [days, setDays] = useState(defaults.deadlineDays);
   const [syariah, setSyariah] = useState(defaults.syariahCompliant);
-  const [pending, start] = useTransition();
   const [msg, setMsg] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   const valuation = target / (equity / 100);
 
   function submit() {
-    setMsg(null);
-    setError(null);
-    start(async () => {
-      const r = await submitPitch({
-        story,
-        fundingTargetIDR: target,
-        equityOfferedPct: equity,
-        deadlineDays: days,
-        syariahCompliant: syariah,
-      });
-      if (!r.ok) {
-        setError(r.error ?? "Gagal");
-        return;
-      }
-      setMsg("Pitch berhasil disubmit. Status: PENDING_REVIEW. Admin akan meninjau.");
-      router.refresh();
-    });
+    setMsg("Pitch disimpan. Status: PENDING_REVIEW (demo — tidak persist setelah refresh).");
   }
 
   return (
@@ -86,13 +65,10 @@ export function PitchForm({
       </div>
       <label className="flex items-center gap-3 rounded-md border border-zinc-200 bg-zinc-50 p-3 text-sm">
         <input type="checkbox" checked={syariah} onChange={(e) => setSyariah(e.target.checked)} className="h-4 w-4 accent-brand-700" />
-        <span>Bisnis ini patuh prinsip syariah (no riba, no maysir, no gharar, halal product, transparan).</span>
+        <span>Bisnis ini patuh prinsip syariah.</span>
       </label>
       {msg && <p className="text-sm text-emerald-700">{msg}</p>}
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <Button onClick={submit} disabled={pending}>
-        {pending ? "Memproses..." : "Submit Pitch ke Review"}
-      </Button>
+      <Button onClick={submit}>Submit Pitch ke Review</Button>
     </div>
   );
 }

@@ -14,10 +14,8 @@ export function AIScoreTeaser() {
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    fetch("/api/score?demo=1")
-      .then((r) => r.json())
-      .then((d: ScoreData) => setData(d))
-      .catch(() => setData({ score: 78, components: { slik: 82, ecommerce: 71, behavior: 80 } }));
+    // Static mock data — no API call.
+    setData({ score: 78, components: { slik: 82, ecommerce: 71, behavior: 80 } });
   }, []);
 
   useEffect(() => {

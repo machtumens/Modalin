@@ -15,26 +15,37 @@ type Item = {
   umkmName: string;
 };
 
+const FAKE_CHANNELS_IN = ["QRIS", "Transfer", "QRIS"];
+const FAKE_CHANNELS_OUT = ["Supplier", "Payroll", "Logistik"];
+const FAKE_PARTIES_IN = ["Pelanggan QRIS", "Reseller", "Marketplace"];
+const FAKE_PARTIES_OUT = ["PLN Pascabayar", "JNE Express", "Iklan Meta Ads"];
+
+function pick<T>(arr: readonly T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 export function LiveActivityFeed({ initial }: { initial: Item[] }) {
   const [items, setItems] = useState<Item[]>(initial);
 
   useEffect(() => {
-    let stop = false;
-    const tick = async () => {
-      try {
-        const r = await fetch("/api/investor/feed", { cache: "no-store" });
-        if (!r.ok) return;
-        const data = (await r.json()) as { items: Item[] };
-        if (stop) return;
-        setItems(data.items.slice(0, 50));
-      } catch {}
-    };
-    const id = setInterval(tick, 30_000);
-    return () => {
-      stop = true;
-      clearInterval(id);
-    };
-  }, []);
+    if (!initial.length) return;
+    const id = setInterval(() => {
+      const sample = initial[Math.floor(Math.random() * initial.length)];
+      const isInflow = Math.random() < 0.6;
+      const newItem: Item = {
+        id: `live-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        ts: new Date().toISOString(),
+        amountIDR: Math.floor(Math.random() * 5_000_000) + 10_000,
+        kind: isInflow ? "INFLOW" : "OUTFLOW",
+        channel: isInflow ? pick(FAKE_CHANNELS_IN) : pick(FAKE_CHANNELS_OUT),
+        counterparty: isInflow ? pick(FAKE_PARTIES_IN) : pick(FAKE_PARTIES_OUT),
+        umkmId: sample.umkmId,
+        umkmName: sample.umkmName,
+      };
+      setItems((cur) => [newItem, ...cur].slice(0, 50));
+    }, 8000);
+    return () => clearInterval(id);
+  }, [initial]);
 
   if (!items.length) {
     return (
@@ -47,7 +58,7 @@ export function LiveActivityFeed({ initial }: { initial: Item[] }) {
   return (
     <div className="rounded-xl border border-zinc-200 bg-white">
       <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-3 text-xs">
-        <span className="font-semibold text-zinc-900">Live Activity</span>
+        <span className="font-semibold text-zinc-900">Live Activity (simulated)</span>
         <span className="flex items-center gap-2 text-zinc-500">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" /> Streaming
         </span>

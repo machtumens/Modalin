@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { DonutChart } from "@tremor/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { executeIndexFund } from "@/actions/index-fund";
+import { useDemoStore } from "@/lib/store";
 import { formatIDR, formatIDRCompact } from "@/lib/money";
 import { sectorLabel, aiBadgeVariant } from "@/lib/labels";
 
@@ -26,8 +26,8 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
   const [strategy, setStrategy] = useState<"conservative" | "balanced" | "growth">("balanced");
   const [open, setOpen] = useState(false);
   const [pending, start] = useTransition();
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const addInvestment = useDemoStore((s) => s.addInvestment);
 
   const candidates = pool[strategy] ?? [];
   const totalScore = useMemo(() => candidates.reduce((s, c) => s + c.aiScore, 0), [candidates]);
@@ -37,17 +37,23 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
         name: c.name,
         value: totalScore ? Math.round((amount * c.aiScore) / totalScore) : 0,
         sector: c.sector,
+        umkmId: c.id,
+        aiScore: c.aiScore,
       })),
     [candidates, amount, totalScore]
   );
 
   function execute() {
-    setError(null);
-    start(async () => {
-      const r = await executeIndexFund({ amountIDR: amount, strategy });
-      if (!r.ok) {
-        setError(r.error ?? "Gagal");
-        return;
+    start(() => {
+      for (const a of allocation) {
+        if (a.value > 0) {
+          addInvestment({
+            umkmId: a.umkmId,
+            umkmName: a.name,
+            amountIDR: a.value,
+            equityPct: 0.05, // mock pro-rata equity
+          });
+        }
       }
       router.push("/investor/dashboard");
     });
@@ -98,7 +104,7 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
           <div className="mb-4 text-sm font-semibold">Alokasi ke {candidates.length} UMKM</div>
           {candidates.length === 0 ? (
             <div className="rounded-md bg-zinc-50 p-4 text-sm text-zinc-500">
-              Tidak ada UMKM yang lulus kriteria strategi ini saat ini.
+              Tidak ada UMKM yang lulus kriteria strategi ini.
             </div>
           ) : (
             <>
@@ -126,9 +132,7 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
                         <td className="py-2 font-medium">{a.name}</td>
                         <td className="py-2 text-zinc-600">{sectorLabel[a.sector] ?? a.sector}</td>
                         <td className="py-2 text-right">
-                          <Badge variant={aiBadgeVariant(candidates.find((c) => c.name === a.name)?.aiScore ?? 0)}>
-                            {candidates.find((c) => c.name === a.name)?.aiScore}
-                          </Badge>
+                          <Badge variant={aiBadgeVariant(a.aiScore)}>{a.aiScore}</Badge>
                         </td>
                         <td className="py-2 text-right">{formatIDRCompact(a.value)}</td>
                       </tr>
@@ -152,7 +156,7 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
           Investasikan via Index Fund
         </Button>
         <p className="mt-3 text-[11px] leading-relaxed text-zinc-500">
-          Otomatis membuat investasi terpisah untuk setiap UMKM. Anda menerima ekuitas pro-rata di masing-masing.
+          Demo prototype — investasi disimpan di browser localStorage.
         </p>
       </aside>
 
@@ -161,9 +165,8 @@ export function IndexFundSimulator({ pool }: { pool: Record<string, Candidate[]>
           <div className="w-full max-w-md rounded-xl bg-white p-6">
             <div className="font-display text-lg font-semibold">Konfirmasi Index Fund</div>
             <p className="mt-2 text-sm text-zinc-600">
-              Anda akan menginvestasikan <span className="font-semibold text-zinc-900">{formatIDR(amount)}</span> ke {candidates.length} UMKM strategi <span className="font-semibold text-zinc-900">{strategy}</span>.
+              Investasi <span className="font-semibold text-zinc-900">{formatIDR(amount)}</span> ke {candidates.length} UMKM strategi <span className="font-semibold text-zinc-900">{strategy}</span>.
             </p>
-            {error && <p className="mt-3 text-xs text-red-600">{error}</p>}
             <div className="mt-5 flex justify-end gap-2">
               <Button variant="ghost" onClick={() => setOpen(false)} disabled={pending}>Batal</Button>
               <Button onClick={execute} disabled={pending}>

@@ -1,16 +1,18 @@
 "use client";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { investAction } from "@/actions/invest";
+import { useDemoStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { formatIDR, formatIDRCompact } from "@/lib/money";
 
 export function InvestWidget({
   umkmId,
+  umkmName,
   remainingIDR,
   valuationIDR,
 }: {
   umkmId: string;
+  umkmName: string;
   remainingIDR: number;
   valuationIDR: number;
 }) {
@@ -18,26 +20,16 @@ export function InvestWidget({
   const [risk, setRisk] = useState(false);
   const [syariah, setSyariah] = useState(false);
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const router = useRouter();
+  const addInvestment = useDemoStore((s) => s.addInvestment);
   const max = Math.max(100_000, remainingIDR);
   const equity = (amount / valuationIDR) * 100;
 
   function submit() {
-    setError(null);
-    start(async () => {
-      const r = await investAction({
-        umkmId,
-        amountIDR: amount,
-        riskAcknowledged: risk,
-        syariahAcknowledged: syariah,
-      });
-      if (!r.ok) {
-        setError(r.error ?? "Gagal");
-        return;
-      }
-      router.push(`/marketplace/${umkmId}/success?equity=${r.equityPctNow.toFixed(2)}&amount=${amount}`);
+    start(() => {
+      addInvestment({ umkmId, umkmName, amountIDR: amount, equityPct: equity });
+      router.push(`/marketplace/${umkmId}/success?equity=${equity.toFixed(2)}&amount=${amount}`);
     });
   }
 
@@ -66,7 +58,7 @@ export function InvestWidget({
       </div>
       <div className="mt-4 grid grid-cols-2 gap-3 rounded-md bg-zinc-50 p-3 text-xs">
         <div>
-          <div className="text-zinc-500">Ekuitas yang Anda dapat</div>
+          <div className="text-zinc-500">Ekuitas Anda</div>
           <div className="font-semibold text-zinc-900">{equity.toFixed(3)}%</div>
         </div>
         <div>
@@ -78,7 +70,7 @@ export function InvestWidget({
         {remainingIDR <= 0 ? "Pendanaan penuh" : "Investasi sekarang"}
       </Button>
       <div className="mt-3 text-[11px] leading-relaxed text-zinc-500">
-        Investor tidak dikenai biaya. Success fee 5% dibebankan ke UMKM saat pendanaan tercapai.
+        Demo prototype — investasi disimpan di browser localStorage. Tidak ada transfer dana sebenarnya.
       </div>
 
       {open && (
@@ -90,13 +82,12 @@ export function InvestWidget({
             </p>
             <label className="mt-4 flex items-start gap-3 text-sm">
               <input type="checkbox" checked={risk} onChange={(e) => setRisk(e.target.checked)} className="mt-0.5 h-4 w-4 accent-brand-700" />
-              <span className="text-zinc-700">Saya memahami risiko investasi UMKM early-growth termasuk kemungkinan kehilangan modal.</span>
+              <span className="text-zinc-700">Saya memahami risiko investasi UMKM early-growth.</span>
             </label>
             <label className="mt-3 flex items-start gap-3 text-sm">
               <input type="checkbox" checked={syariah} onChange={(e) => setSyariah(e.target.checked)} className="mt-0.5 h-4 w-4 accent-brand-700" />
-              <span className="text-zinc-700">Saya menyetujui akad bagi hasil ekuitas (musyarakah) tanpa unsur riba.</span>
+              <span className="text-zinc-700">Saya setuju akad bagi hasil ekuitas tanpa riba.</span>
             </label>
-            {error && <p className="mt-3 text-xs text-red-600">{error}</p>}
             <div className="mt-5 flex justify-end gap-2">
               <Button variant="ghost" onClick={() => setOpen(false)} disabled={pending}>Batal</Button>
               <Button onClick={submit} disabled={pending || !risk || !syariah}>

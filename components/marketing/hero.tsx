@@ -1,12 +1,10 @@
 "use client";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 export function Hero() {
-  const t = useTranslations("Hero");
   const reduce = useReducedMotion();
   const stagger = {
     hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 16 },
@@ -30,21 +28,21 @@ export function Hero() {
               variants={child}
               className="font-display text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl"
             >
-              {t("headline")}
+              Modal untuk UMKM Bertumbuh, Akses untuk Investor Generasi Baru.
             </motion.h1>
             <motion.p variants={child} className="mt-6 text-lg text-zinc-600 max-w-xl">
-              {t("sub")}
+              Platform equity crowdfunding pertama Indonesia yang terintegrasi dengan rekening bank UMKM. Investasi mulai Rp100.000, transparansi real-time, 100% bagi hasil ekuitas.
             </motion.p>
             <motion.div variants={child} className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link href="/marketplace">{t("ctaInvest")}</Link>
+                <Link href="/marketplace">Mulai Investasi Rp100rb</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="/untuk-umkm">{t("ctaUmkm")}</Link>
+                <Link href="/untuk-umkm">Daftarkan UMKM Anda</Link>
               </Button>
             </motion.div>
             <motion.div variants={child} className="mt-8 flex flex-wrap gap-2 text-xs text-zinc-500">
-              <Badge variant="muted">OJK Pending POJK 22/2024</Badge>
+              <Badge variant="muted">Demo Prototype</Badge>
               <Badge variant="muted">8 Mitra BPR</Badge>
               <Badge variant="muted">Min Investasi Rp100.000</Badge>
             </motion.div>
@@ -57,12 +55,12 @@ export function Hero() {
           >
             <div className="flex flex-col gap-3 text-sm">
               <Stat label="Funding gap UMKM" value="Rp1.605 T/tahun" />
-              <Stat label="Investor ritel aktif (KSEI Q4 2025)" value="14,8 jt" />
+              <Stat label="Investor ritel aktif" value="14,8 jt" />
               <Stat label="Min ticket Modalin" value="Rp100.000" highlight />
               <Stat label="Skema" value="100% Bagi Hasil Ekuitas" />
             </div>
             <div className="mt-6 rounded-md bg-zinc-900 p-4 text-xs leading-relaxed text-zinc-100">
-              Setiap transaksi UMKM mengalir lewat Modalin Bank Account dan tampil real-time di dashboard investor. Information asymmetry — selesai.
+              Setiap transaksi UMKM mengalir lewat Modalin Bank Account dan tampil real-time di dashboard investor.
             </div>
           </motion.div>
         </div>

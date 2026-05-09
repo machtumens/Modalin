@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { TxnKind } from "@/lib/enums";
-import { prisma } from "@/lib/prisma";
+import { getUMKM, getPitch, getTransactionsByUMKM } from "@/lib/data";
 import { scoreUMKM } from "@/lib/ai/scorer";
+import { TxnKind } from "@/lib/enums";
 import { Badge } from "@/components/ui/badge";
 import { AIScorePanel } from "@/components/marketplace/ai-score-panel";
 import { InvestWidget } from "@/components/marketplace/invest-widget";
@@ -9,28 +9,20 @@ import { TransactionPreview } from "@/components/marketplace/transaction-preview
 import { formatIDR, formatIDRCompact } from "@/lib/money";
 import { sectorLabel } from "@/lib/labels";
 
-export const dynamic = "force-dynamic";
-
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const u = await prisma.uMKM.findUnique({ where: { id }, select: { name: true } });
+  const u = getUMKM(id);
   return { title: u?.name ?? "UMKM" };
 }
 
 export default async function UMKMDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const u = await prisma.uMKM.findUnique({
-    where: { id },
-    include: {
-      pitch: true,
-      bankAccount: { include: { transactions: { orderBy: { ts: "desc" }, take: 200 } } },
-      owner: { select: { name: true } },
-    },
-  });
-  if (!u || !u.pitch) notFound();
+  const u = getUMKM(id);
+  const pitch = u ? getPitch(u.id) : undefined;
+  if (!u || !pitch) notFound();
 
   const score = scoreUMKM({
-    monthlyRevenueIDR: Number(u.monthlyRevenueIDR),
+    monthlyRevenueIDR: u.monthlyRevenueIDR,
     ageMonths: u.ageMonths,
     sliKScore: u.sliKScore,
     ecomVelocity: u.ecomVelocity,
@@ -39,20 +31,19 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
   });
   const finalScore = u.aiScoreOverride ?? score.total;
 
-  const target = Number(u.fundingTargetIDR);
-  const raised = Number(u.pitch.raisedIDR);
+  const target = u.fundingTargetIDR;
+  const raised = pitch.raisedIDR;
   const remaining = Math.max(0, target - raised);
   const pct = Math.min(100, Math.round((raised / target) * 100));
-  const daysLeft = Math.max(0, Math.ceil((u.pitch.deadline.getTime() - Date.now()) / 86_400_000));
+  const daysLeft = Math.max(0, Math.ceil((new Date(pitch.deadline).getTime() - Date.now()) / 86_400_000));
 
   const cutoff = Date.now() - 7 * 86_400_000;
-  const last7 = (u.bankAccount?.transactions ?? []).filter((t) => t.ts.getTime() >= cutoff);
+  const last7 = getTransactionsByUMKM(u.id, 200).filter((t) => new Date(t.ts).getTime() >= cutoff);
   const inflowMap = new Map<string, number>();
   const outflowMap = new Map<string, number>();
   for (const t of last7) {
     const m = t.kind === TxnKind.INFLOW ? inflowMap : outflowMap;
-    const k = t.channel;
-    m.set(k, (m.get(k) ?? 0) + Number(t.amountIDR));
+    m.set(t.channel, (m.get(t.channel) ?? 0) + t.amountIDR);
   }
   const inflow = [...inflowMap.entries()].map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
   const outflow = [...outflowMap.entries()].map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
@@ -69,16 +60,16 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
             </div>
             <h1 className="mt-3 font-display text-4xl font-bold">{u.name}</h1>
             <div className="mt-2 text-sm text-zinc-500">
-              Pendiri {u.owner.name} · {u.location}, {u.province}
+              Pendiri {u.ownerName} · {u.location}, {u.province}
             </div>
           </header>
 
           <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            <KPI label="Omzet/bln" value={formatIDRCompact(Number(u.monthlyRevenueIDR))} />
+            <KPI label="Omzet/bln" value={formatIDRCompact(u.monthlyRevenueIDR)} />
             <KPI label="Usia bisnis" value={`${u.ageMonths} bln`} />
             <KPI label="Target" value={formatIDRCompact(target)} />
             <KPI label="Equity" value={`${u.equityOfferedPct.toFixed(1)}%`} />
-            <KPI label="Valuasi" value={formatIDRCompact(Number(u.valuationIDR))} />
+            <KPI label="Valuasi" value={formatIDRCompact(u.valuationIDR)} />
             <KPI label="Sisa hari" value={`${daysLeft}`} />
           </section>
 
@@ -128,8 +119,9 @@ export default async function UMKMDetailPage({ params }: { params: Promise<{ id:
         <aside>
           <InvestWidget
             umkmId={u.id}
+            umkmName={u.name}
             remainingIDR={remaining}
-            valuationIDR={Number(u.valuationIDR)}
+            valuationIDR={u.valuationIDR}
           />
         </aside>
       </div>

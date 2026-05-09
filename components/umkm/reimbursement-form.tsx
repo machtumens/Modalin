@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CATEGORY_LABEL } from "@/lib/ai/price-validator";
-import { requestReimbursement } from "@/actions/reimbursement";
+import { CATEGORY_LABEL, validateReimbursement, type ReimbursementCategory } from "@/lib/ai/price-validator";
+import { useDemoStore } from "@/lib/store";
 import { formatIDR } from "@/lib/money";
 
 const categories = Object.entries(CATEGORY_LABEL) as [keyof typeof CATEGORY_LABEL, string][];
@@ -18,30 +18,40 @@ export function ReimbursementForm() {
   const [description, setDescription] = useState("");
   const [pending, start] = useTransition();
   const [result, setResult] = useState<null | { status: string; verdict: string; deltaPct: number; note: string; refPriceIDR: number }>(null);
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const addReimbursement = useDemoStore((s) => s.addReimbursement);
 
   function submit() {
-    setError(null);
     setResult(null);
-    start(async () => {
-      const r = await requestReimbursement({
-        category,
+    start(() => {
+      const validation = validateReimbursement({
+        category: category as ReimbursementCategory,
         amountIDR: amount,
         quantity,
-        supplier: supplier || undefined,
-        description,
       });
-      if (!r.ok) {
-        setError(r.error ?? "Gagal");
-        return;
-      }
+      let status: "AUTO_APPROVED" | "PENDING_ADMIN_REVIEW" | "BLOCKED_PRICE_CHECK" | "DISBURSED";
+      if (validation.verdict === "OVER") status = "BLOCKED_PRICE_CHECK";
+      else if (validation.verdict === "OK" && amount <= 5_000_000) status = "DISBURSED";
+      else status = "PENDING_ADMIN_REVIEW";
+
+      addReimbursement({
+        umkmId: "umkm-1",
+        amountIDR: amount,
+        category: category as string,
+        description,
+        supplier: supplier || undefined,
+        refPriceIDR: validation.refPriceIDR,
+        deltaPct: validation.deltaPct,
+        verdict: validation.verdict,
+        status,
+      });
+
       setResult({
-        status: r.status,
-        verdict: r.validation.verdict,
-        deltaPct: r.validation.deltaPct,
-        note: r.validation.note,
-        refPriceIDR: r.validation.refPriceIDR,
+        status,
+        verdict: validation.verdict,
+        deltaPct: validation.deltaPct,
+        note: validation.note,
+        refPriceIDR: validation.refPriceIDR,
       });
       router.refresh();
     });
@@ -88,10 +98,8 @@ export function ReimbursementForm() {
             minLength={2}
             maxLength={500}
             className="mt-1 h-24 w-full resize-none rounded-md border border-zinc-300 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-700"
-            placeholder="Contoh: Laptop kerja untuk admin keuangan"
           />
         </div>
-        {error && <p className="text-xs text-red-600">{error}</p>}
         {result && (
           <div className={`rounded-md p-4 text-sm ${
             result.verdict === "OK" ? "bg-emerald-50 text-emerald-800" :
@@ -106,6 +114,9 @@ export function ReimbursementForm() {
         <Button onClick={submit} disabled={pending || !description}>
           {pending ? "Memproses..." : "Ajukan Reimbursement"}
         </Button>
+        <p className="text-[11px] leading-relaxed text-zinc-500">
+          Demo prototype — pengajuan disimpan di browser localStorage. Tidak ada dana riil yang berpindah.
+        </p>
       </div>
     </div>
   );

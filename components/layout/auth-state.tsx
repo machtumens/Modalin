@@ -1,29 +1,31 @@
 import Link from "next/link";
-import { auth, signOut } from "@/auth";
+import { getDemoUserId, getRole, clearRole } from "@/lib/role";
+import { getUserById } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 
 export async function AuthState() {
-  const session = await auth();
-  if (!session?.user) {
+  const role = await getRole();
+  const userId = await getDemoUserId();
+  if (!role || !userId) {
     return (
       <Button asChild size="sm">
         <Link href="/signin">Masuk</Link>
       </Button>
     );
   }
-  const role = session.user.role.toLowerCase();
+  const user = getUserById(userId);
   return (
     <div className="flex items-center gap-2">
       <Link
-        href={`/${role}/dashboard`}
+        href={`/${role.toLowerCase()}/dashboard`}
         className="text-sm font-medium text-zinc-700 hover:text-brand-700"
       >
-        {session.user.name}
+        {user?.name ?? role}
       </Link>
       <form
         action={async () => {
           "use server";
-          await signOut({ redirectTo: "/" });
+          await clearRole();
         }}
       >
         <Button variant="ghost" size="sm" type="submit">
