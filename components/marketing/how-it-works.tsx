@@ -1,5 +1,6 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ClipboardList, Sparkles, Banknote, Activity } from "lucide-react";
 
 const steps = [
@@ -11,36 +12,59 @@ const steps = [
 
 export function HowItWorks() {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 80%", "end 30%"] });
+  const lineH = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
-    <section className="bg-zinc-50">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mb-10 max-w-2xl">
-          <div className="text-sm font-semibold uppercase tracking-wide text-brand-700">Cara kerja</div>
-          <h2 className="mt-2 font-display text-3xl font-bold text-zinc-900 sm:text-4xl">
-            Empat langkah dari pitch ke pertumbuhan terverifikasi.
+    <section className="relative border-y border-zinc-800/60 bg-zinc-950/60">
+      <div className="pointer-events-none absolute inset-0 grid-floor opacity-50" />
+      <div ref={ref} className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <div className="mb-14 max-w-2xl">
+          <div className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-400">
+            Cara kerja
+          </div>
+          <h2 className="mt-3 font-display text-4xl font-bold text-white sm:text-5xl">
+            Empat langkah dari pitch ke{" "}
+            <span className="shimmer-text">pertumbuhan terverifikasi</span>.
           </h2>
         </div>
-        <ol className="grid gap-6 md:grid-cols-4">
-          {steps.map((s, i) => (
-            <motion.li
-              key={s.title}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="relative rounded-xl border border-zinc-200 bg-white p-6"
-            >
-              <div className="absolute -top-3 left-6 rounded-full bg-brand-700 px-2 py-0.5 text-xs font-semibold text-white">
-                {i + 1}
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-gold-600">
-                <s.icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-4 font-display text-lg font-semibold text-zinc-900">{s.title}</h3>
-              <p className="mt-1 text-sm text-zinc-600 leading-relaxed">{s.body}</p>
-            </motion.li>
-          ))}
-        </ol>
+
+        <div className="relative">
+          {/* progress rail */}
+          <div className="absolute left-6 top-0 hidden h-full w-px bg-zinc-800 md:block" />
+          <motion.div
+            style={{ height: lineH }}
+            className="absolute left-6 top-0 hidden w-px bg-gradient-to-b from-brand-400 via-gold-400 to-brand-400 shadow-[0_0_20px_rgba(45,212,191,0.6)] md:block"
+          />
+
+          <ol className="space-y-6 md:space-y-10">
+            {steps.map((s, i) => (
+              <motion.li
+                key={s.title}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+                className="relative flex flex-col gap-4 md:flex-row md:items-center md:gap-8 md:pl-20"
+              >
+                <div className="absolute left-0 top-0 hidden h-12 w-12 items-center justify-center rounded-full border border-brand-400/40 bg-zinc-950 text-brand-300 shadow-[0_0_30px_-5px_rgba(45,212,191,0.5)] md:flex">
+                  <s.icon className="h-5 w-5" />
+                </div>
+                <div className="flex-1 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur transition-colors hover:border-brand-400/40">
+                  <div className="mb-2 flex items-center gap-3">
+                    <span className="font-mono text-xs font-medium uppercase tracking-widest text-brand-400">
+                      step {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="h-px flex-1 bg-zinc-800" />
+                  </div>
+                  <h3 className="font-display text-2xl font-semibold text-white">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">{s.body}</p>
+                </div>
+              </motion.li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

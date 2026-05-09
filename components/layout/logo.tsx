@@ -28,16 +28,16 @@ export function Logo({
           width={markSize}
           height={markSize}
           priority={size !== "sm"}
-          className="object-contain"
+          className="object-contain drop-shadow-[0_0_12px_rgba(45,212,191,0.35)]"
           onError={() => setImgFailed(true)}
         />
       )}
       <div className="flex flex-col leading-none">
-        <span className={cn("font-display font-bold tracking-tight text-zinc-900", wordCls)}>
+        <span className={cn("font-display font-bold tracking-tight text-white", wordCls)}>
           modalin
         </span>
         {withTagline && (
-          <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-500">
+          <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-400">
             Invest · Grow · Impact
           </span>
         )}

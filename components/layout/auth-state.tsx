@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { getDemoUserId, getRole, clearRole } from "@/lib/role";
+import { getDemoUserId, getRole } from "@/lib/role";
 import { getUserById } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { signOutAction } from "./auth-actions";
 
 export async function AuthState() {
   const role = await getRole();
@@ -18,16 +19,11 @@ export async function AuthState() {
     <div className="flex items-center gap-2">
       <Link
         href={`/${role.toLowerCase()}/dashboard`}
-        className="text-sm font-medium text-zinc-700 hover:text-brand-700"
+        className="text-sm font-medium text-zinc-300 hover:text-brand-400"
       >
         {user?.name ?? role}
       </Link>
-      <form
-        action={async () => {
-          "use server";
-          await clearRole();
-        }}
-      >
+      <form action={signOutAction}>
         <Button variant="ghost" size="sm" type="submit">
           Keluar
         </Button>
